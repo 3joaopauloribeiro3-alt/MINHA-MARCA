@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Minha conta — NOME Streetwear"
+  >
+
+  <title>Minha conta — NOME</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="account-page">
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header class="header">
+
+    <a href="index.html" class="brand">
+      NOME<span>.</span>
+    </a>
+
+    <nav class="desktop-nav">
+      <a href="index.html#drop">DROP 01</a>
+      <a href="index.html#produtos">PRODUTOS</a>
+      <a href="index.html#marca">A MARCA</a>
+    </nav>
+
+    <div class="header-actions">
+
+      <a
+        href="index.html"
+        class="account-link"
+      >
+        Loja
+      </a>
+
+      <button
+        class="cart-button"
+        type="button"
+        onclick="openCart()"
+      >
+        Sacola
+        <span id="cartCount">0</span>
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       CONTEÚDO
+       ===================================================== -->
+
+  <main class="account-main">
+
+    <div class="account-container">
+
+      <!-- CABEÇALHO DA CONTA -->
+
+      <section class="account-welcome">
+
+        <div>
+
+          <span class="section-label">
+            MINHA CONTA
+          </span>
+
+          <h1>
+            OLÁ,
+            <span data-user-name>CLIENTE</span>.
+          </h1>
+
+          <p>
+            Gerencie sua conta e acompanhe seus pedidos.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="account-logout"
+          onclick="logoutUser()"
+        >
+          SAIR DA CONTA
+        </button>
+
+      </section>
+
+
+      <!-- =================================================
+           GRID
+           ================================================= -->
+
+      <section class="account-grid">
+
+
+        <!-- PEDIDOS -->
+
+        <a
+          href="pedidos.html"
+          class="account-card account-card-large"
+        >
+
+          <div class="account-card-top">
+
+            <span class="account-number">
+              01
+            </span>
+
+            <span class="account-arrow">
+              ↗
+            </span>
+
+          </div>
+
+          <div>
+
+            <h2>
+              MEUS<br>
+              PEDIDOS
+            </h2>
+
+            <p>
+              Acompanhe seus pedidos e veja seu histórico de compras.
+            </p>
+
+          </div>
+
+        </a>
+
+
+        <!-- DADOS -->
+
+        <div class="account-card">
+
+          <div class="account-card-top">
+
+            <span class="account-number">
+              02
+            </span>
+
+          </div>
+
+          <div>
+
+            <h2>
+              MEUS<br>
+              DADOS
+            </h2>
+
+            <p data-user-email>
+              seu@email.com
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- CONTA -->
+
+        <div class="account-card">
+
+          <div class="account-card-top">
+
+            <span class="account-number">
+              03
+            </span>
+
+          </div>
+
+          <div>
+
+            <h2>
+              CONTA<br>
+              NOME
+            </h2>
+
+            <p>
+              Sua conta está ativa.
+            </p>
+
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+      <!-- =================================================
+           INFORMAÇÕES
+           ================================================= -->
+
+      <section class="account-info">
+
+        <div class="account-info-heading">
+
+          <span class="section-label">
+            SEUS DADOS
+          </span>
+
+          <h2>
+            INFORMAÇÕES<br>
+            DA CONTA
+          </h2>
+
+        </div>
+
+
+        <form
+          class="account-form"
+          onsubmit="updateAccountData(event)"
+        >
+
+          <div class="form-field">
+
+            <label for="accountName">
+              NOME
+            </label>
+
+            <input
+              id="accountName"
+              type="text"
+              data-account-name
+              required
+            >
+
+          </div>
+
+
+          <div class="form-field">
+
+            <label>
+              E-MAIL
+            </label>
+
+            <input
+              type="email"
+              data-account-email
+              disabled
+            >
+
+          </div>
+
+
+          <div
+            id="accountMessage"
+            class="auth-message"
+            style="display:none;"
+          ></div>
+
+
+          <button
+            type="submit"
+            class="button button-black"
+          >
+            SALVAR ALTERAÇÕES
+          </button>
+
+        </form>
+
+      </section>
+
+
+      <!-- =================================================
+           ATALHOS
+           ================================================= -->
+
+      <section class="account-links">
+
+        <a href="pedidos.html">
+          <span>MEUS PEDIDOS</span>
+          <strong>→</strong>
+        </a>
+
+        <a href="index.html#produtos">
+          <span>CONTINUAR COMPRANDO</span>
+          <strong>→</strong>
+        </a>
+
+        <a href="trocas.html">
+          <span>TROCAS E DEVOLUÇÕES</span>
+          <strong>→</strong>
+        </a>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       CARRINHO
+       ===================================================== -->
+
+  <aside
+    class="cart-drawer"
+    id="cartDrawer"
+  >
+
+    <div class="cart-header">
+
+      <div>
+
+        <span>SUA</span>
+
+        <h2>
+          SACOLA
+        </h2>
+
+      </div>
+
+      <button
+        onclick="closeCart()"
+        class="cart-close"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      class="cart-content"
+      id="cartItems"
+    ></div>
+
+
+    <div class="cart-footer">
+
+      <div class="cart-total-row">
+
+        <span>
+          SUBTOTAL
+        </span>
+
+        <strong id="cartTotal">
+          R$ 0,00
+        </strong>
+
+      </div>
+
+      <p class="cart-shipping">
+        Frete calculado no checkout.
+      </p>
+
+      <a
+        href="checkout.html"
+        class="button button-black cart-checkout"
+      >
+        FINALIZAR COMPRA
+      </a>
+
+    </div>
+
+  </aside>
+
+
+  <div
+    class="cart-overlay"
+    id="cartOverlay"
+    onclick="closeCart()"
+  ></div>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <footer>
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 NOME.
+      </span>
+
+      <span>
+        TODOS OS DIREITOS RESERVADOS.
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =====================================================
+       SCRIPTS
+       ===================================================== -->
+
+  <script src="produtos.js"></script>
+  <script src="carrinho.js"></script>
+  <script src="auth.js"></script>
+
+
+  <!-- =====================================================
+       INICIALIZAÇÃO DA CONTA
+       ===================================================== -->
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const user = requireLogin();
+
+      if (!user) return;
+
+      const nameInput =
+        document.getElementById("accountName");
+
+      const emailInput =
+        document.querySelector("[data-account-email]");
+
+      if (nameInput) {
+        nameInput.value = user.name;
+      }
+
+      if (emailInput) {
+        emailInput.value = user.email;
+      }
+
+      loadAccountData();
+
+      updateAuthUI();
+
+      updateCart();
+
+    });
+
+  </script>
+
+</body>
+</html>
