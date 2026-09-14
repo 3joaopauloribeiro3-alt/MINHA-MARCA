@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Crie sua conta NOME."
+  >
+
+  <title>Criar conta — NOME</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page">
+
+  <!-- HEADER -->
+
+  <header class="header auth-header">
+
+    <a href="index.html" class="brand">
+      NOME<span>.</span>
+    </a>
+
+    <a href="index.html" class="auth-back">
+      ← Voltar para a loja
+    </a>
+
+  </header>
+
+
+  <!-- CADASTRO -->
+
+  <main class="auth-main">
+
+    <section class="auth-card">
+
+      <div class="auth-heading">
+
+        <span class="section-label">
+          NOVO CLIENTE
+        </span>
+
+        <h1>
+          CRIE SUA<br>
+          <em>CONTA.</em>
+        </h1>
+
+        <p>
+          Crie sua conta para acompanhar pedidos e ter uma experiência melhor na NOME.
+        </p>
+
+      </div>
+
+
+      <!-- FORMULÁRIO -->
+
+      <form
+        class="auth-form"
+        onsubmit="registerUser(event)"
+      >
+
+        <div class="form-field">
+
+          <label for="registerName">
+            NOME COMPLETO
+          </label>
+
+          <input
+            id="registerName"
+            name="name"
+            type="text"
+            autocomplete="name"
+            placeholder="Seu nome completo"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="registerEmail">
+            E-MAIL
+          </label>
+
+          <input
+            id="registerEmail"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="seu@email.com"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="registerPassword">
+            SENHA
+          </label>
+
+          <input
+            id="registerPassword"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Mínimo de 6 caracteres"
+            minlength="6"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-field">
+
+          <label for="registerPasswordConfirm">
+            CONFIRMAR SENHA
+          </label>
+
+          <input
+            id="registerPasswordConfirm"
+            name="passwordConfirm"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Digite a senha novamente"
+            minlength="6"
+            required
+          >
+
+        </div>
+
+
+        <!-- MENSAGEM -->
+
+        <div
+          id="registerMessage"
+          class="auth-message"
+          style="display:none;"
+        ></div>
+
+
+        <!-- TERMOS -->
+
+        <label class="auth-checkbox">
+
+          <input
+            type="checkbox"
+            id="registerTerms"
+            required
+          >
+
+          <span>
+            Concordo com os
+            <a href="termos.html" target="_blank">
+              Termos e Condições
+            </a>
+            e a
+            <a href="privacidade.html" target="_blank">
+              Política de Privacidade
+            </a>.
+          </span>
+
+        </label>
+
+
+        <button
+          type="submit"
+          class="button button-black auth-submit"
+        >
+          CRIAR CONTA
+        </button>
+
+      </form>
+
+
+      <!-- LOGIN -->
+
+      <div class="auth-divider">
+        <span>JÁ POSSUI UMA CONTA?</span>
+      </div>
+
+      <a
+        href="login.html"
+        class="button button-outline auth-register"
+      >
+        ENTRAR
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="auth-footer">
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 NOME.
+      </span>
+
+      <span>
+        TODOS OS DIREITOS RESERVADOS.
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <!-- SCRIPT -->
+
+  <script src="auth.js"></script>
+
+</body>
+</html>
