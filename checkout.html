@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Checkout — NOME Streetwear"
+  >
+
+  <title>Checkout — NOME</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="checkout-page">
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header class="header checkout-header">
+
+    <a href="index.html" class="brand">
+      NOME<span>.</span>
+    </a>
+
+    <div class="checkout-security">
+      COMPRA SEGURA
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       CHECKOUT
+       ===================================================== -->
+
+  <main class="checkout-main">
+
+    <div class="checkout-container">
+
+      <!-- =================================================
+           CABEÇALHO
+           ================================================= -->
+
+      <section class="checkout-heading">
+
+        <span class="section-label">
+          CHECKOUT
+        </span>
+
+        <h1>
+          FINALIZE<br>
+          <em>SUA COMPRA.</em>
+        </h1>
+
+      </section>
+
+
+      <!-- =================================================
+           LAYOUT
+           ================================================= -->
+
+      <div class="checkout-grid">
+
+
+        <!-- =================================================
+             FORMULÁRIO
+             ================================================= -->
+
+        <section class="checkout-form-section">
+
+          <form
+            id="checkoutForm"
+            class="checkout-form"
+            onsubmit="finishOrder(event)"
+          >
+
+            <!-- DADOS -->
+
+            <div class="checkout-block">
+
+              <div class="checkout-block-heading">
+
+                <span>01</span>
+
+                <div>
+                  <h2>
+                    SEUS DADOS
+                  </h2>
+
+                  <p>
+                    Informações para contato.
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="checkout-fields">
+
+                <div class="form-field">
+
+                  <label for="checkoutName">
+                    NOME COMPLETO
+                  </label>
+
+                  <input
+                    id="checkoutName"
+                    type="text"
+                    autocomplete="name"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-field">
+
+                  <label for="checkoutEmail">
+                    E-MAIL
+                  </label>
+
+                  <input
+                    id="checkoutEmail"
+                    type="email"
+                    autocomplete="email"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-field">
+
+                  <label for="checkoutPhone">
+                    TELEFONE / WHATSAPP
+                  </label>
+
+                  <input
+                    id="checkoutPhone"
+                    type="tel"
+                    autocomplete="tel"
+                    placeholder="(00) 00000-0000"
+                    required
+                  >
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- ENDEREÇO -->
+
+            <div class="checkout-block">
+
+              <div class="checkout-block-heading">
+
+                <span>02</span>
+
+                <div>
+                  <h2>
+                    ENTREGA
+                  </h2>
+
+                  <p>
+                    Para onde devemos enviar seu pedido?
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="checkout-fields">
+
+                <div class="form-field">
+
+                  <label for="checkoutCep">
+                    CEP
+                  </label>
+
+                  <input
+                    id="checkoutCep"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    placeholder="00000-000"
+                    maxlength="9"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-field">
+
+                  <label for="checkoutAddress">
+                    ENDEREÇO
+                  </label>
+
+                  <input
+                    id="checkoutAddress"
+                    type="text"
+                    autocomplete="street-address"
+                    placeholder="Rua, avenida..."
+                    required
+                  >
+
+                </div>
+
+
+                <div class="checkout-two-columns">
+
+                  <div class="form-field">
+
+                    <label for="checkoutNumber">
+                      NÚMERO
+                    </label>
+
+                    <input
+                      id="checkoutNumber"
+                      type="text"
+                      required
+                    >
+
+                  </div>
+
+
+                  <div class="form-field">
+
+                    <label for="checkoutComplement">
+                      COMPLEMENTO
+                    </label>
+
+                    <input
+                      id="checkoutComplement"
+                      type="text"
+                      placeholder="Opcional"
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <div class="checkout-two-columns">
+
+                  <div class="form-field">
+
+                    <label for="checkoutNeighborhood">
+                      BAIRRO
+                    </label>
+
+                    <input
+                      id="checkoutNeighborhood"
+                      type="text"
+                      required
+                    >
+
+                  </div>
+
+
+                  <div class="form-field">
+
+                    <label for="checkoutCity">
+                      CIDADE
+                    </label>
+
+                    <input
+                      id="checkoutCity"
+                      type="text"
+                      autocomplete="address-level2"
+                      required
+                    >
+
+                  </div>
+
+                </div>
+
+
+                <div class="form-field">
+
+                  <label for="checkoutState">
+                    ESTADO
+                  </label>
+
+                  <select
+                    id="checkoutState"
+                    required
+                  >
+
+                    <option value="">
+                      Selecione
+                    </option>
+
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- FRETE -->
+
+            <div class="checkout-block">
+
+              <div class="checkout-block-heading">
+
+                <span>03</span>
+
+                <div>
+                  <h2>
+                    ENVIO
+                  </h2>
+
+                  <p>
+                    Escolha uma opção de entrega.
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="shipping-options">
+
+                <label class="shipping-option">
+
+                  <input
+                    type="radio"
+                    name="shipping"
+                    value="standard"
+                    data-price="19.90"
+                    checked
+                  >
+
+                  <span class="shipping-option-content">
+
+                    <strong>
+                      ENVIO PADRÃO
+                    </strong>
+
+                    <small>
+                      5 a 10 dias úteis
+                    </small>
+
+                  </span>
+
+                  <strong>
+                    R$ 19,90
+                  </strong>
+
+                </label>
+
+
+                <label class="shipping-option">
+
+                  <input
+                    type="radio"
+                    name="shipping"
+                    value="express"
+                    data-price="34.90"
+                  >
+
+                  <span class="shipping-option-content">
+
+                    <strong>
+                      ENVIO EXPRESSO
+                    </strong>
+
+                    <small>
+                      2 a 5 dias úteis
+                    </small>
+
+                  </span>
+
+                  <strong>
+                    R$ 34,90
+                  </strong>
+
+                </label>
+
+
+                <label class="shipping-option">
+
+                  <input
+                    type="radio"
+                    name="shipping"
+                    value="free"
+                    data-price="0"
+                  >
+
+                  <span class="shipping-option-content">
+
+                    <strong>
+                      FRETE GRÁTIS
+                    </strong>
+
+                    <small>
+                      Para pedidos acima de R$ 299
+                    </small>
+
+                  </span>
+
+                  <strong>
+                    GRÁTIS
+                  </strong>
+
+                </label>
+
+              </div>
+
+            </div>
+
+
+            <!-- PAGAMENTO -->
+
+            <div class="checkout-block">
+
+              <div class="checkout-block-heading">
+
+                <span>04</span>
+
+                <div>
+                  <h2>
+                    PAGAMENTO
+                  </h2>
+
+                  <p>
+                    Escolha como deseja pagar.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="payment-options">
+
+                <label class="payment-option">
+
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="pix"
+                    checked
+                  >
+
+                  <span>
+
+                    <strong>
+                      PIX
+                    </strong>
+
+                    <small>
+                      Aprovação rápida
+                    </small>
+
+                  </span>
+
+                </label>
+
+
+                <label class="payment-option">
+
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="card"
+                  >
+
+                  <span>
+
+                    <strong>
+                      CARTÃO
+                    </strong>
+
+                    <small>
+                      Crédito ou débito
+                    </small>
+
+                  </span>
+
+                </label>
+
+              </div>
+
+            </div>
+
+
+            <!-- MENSAGEM -->
+
+            <div
+              id="checkoutMessage"
+              class="auth-message"
+              style="display:none;"
+            ></div>
+
+
+            <button
+              type="submit"
+              class="button button-black checkout-submit"
+            >
+              CONTINUAR PARA PAGAMENTO →
+            </button>
+
+          </form>
+
+        </section>
+
+
+        <!-- =================================================
+             RESUMO
+             ================================================= -->
+
+        <aside class="checkout-summary">
+
+          <div class="checkout-summary-header">
+
+            <span class="section-label">
+              SEU PEDIDO
+            </span>
+
+            <h2>
+              RESUMO
+            </h2>
+
+          </div>
+
+
+          <div
+            id="checkoutItems"
+            class="checkout-items"
+          ></div>
+
+
+          <div class="checkout-totals">
+
+            <div>
+
+              <span>
+                SUBTOTAL
+              </span>
+
+              <strong id="checkoutSubtotal">
+                R$ 0,00
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                FRETE
+              </span>
+
+              <strong id="checkoutShipping">
+                R$ 19,90
+              </strong>
+
+            </div>
+
+
+            <div class="checkout-total">
+
+              <span>
+                TOTAL
+              </span>
+
+              <strong id="checkoutTotal">
+                R$ 0,00
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <a
+            href="index.html#produtos"
+            class="checkout-continue"
+          >
+            ← CONTINUAR COMPRANDO
+          </a>
+
+        </aside>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <footer>
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 NOME.
+      </span>
+
+      <span>
+        TODOS OS DIREITOS RESERVADOS.
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =====================================================
+       SCRIPTS
+       ===================================================== -->
+
+  <script src="produtos.js"></script>
+  <script src="carrinho.js"></script>
+  <script src="auth.js"></script>
+  <script src="checkout.js"></script>
+
+</body>
+</html>
