@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Coleção premium streetwear. Peças essenciais, design marcante e acabamento impecável."
+  >
+
+  <title>NOME — Streetwear</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- AVISO SUPERIOR -->
+  <div class="announcement">
+    FRETE GRÁTIS NAS COMPRAS ACIMA DE R$ 299
+  </div>
+
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <a class="logo" href="#">
+      NOME<span>.</span>
+    </a>
+
+    <nav>
+      <a href="#colecao">Coleção</a>
+      <a href="#essenciais">Essenciais</a>
+      <a href="#sobre">Manifesto</a>
+    </nav>
+
+    <button
+      class="cart-btn"
+      onclick="openCart()"
+    >
+      Sacola
+      <span id="cartCount">0</span>
+    </button>
+
+  </header>
+
+
+  <!-- CONTEÚDO -->
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="hero-copy">
+
+        <p class="eyebrow">
+          DROP 01 — 2026
+        </p>
+
+        <h1>
+          Vista sua<br>
+          <em>presença.</em>
+        </h1>
+
+        <p class="hero-text">
+          Streetwear premium para quem não precisa pedir espaço.
+          Silhuetas fortes, materiais selecionados e uma estética
+          feita para durar.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            href="#colecao"
+            class="btn btn-light"
+          >
+            Ver coleção
+          </a>
+
+          <a
+            href="#sobre"
+            class="text-link"
+          >
+            Conheça a marca ↗
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-art">
+
+        <div class="hero-card">
+
+          <div class="model-shape"></div>
+
+          <div class="hero-label">
+            01 / 06
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TICKER -->
+    <section class="ticker">
+
+      <span>LIMITED DROP</span>
+      <span>PREMIUM STREETWEAR</span>
+      <span>MADE TO STAND OUT</span>
+      <span>LIMITED DROP</span>
+
+    </section>
+
+
+    <!-- COLEÇÃO -->
+    <section
+      id="colecao"
+      class="section"
+    >
+
+      <div class="section-head">
+
+        <div>
+
+          <p class="eyebrow">
+            01 — COLEÇÃO
+          </p>
+
+          <h2>
+            Peças que falam<br>
+            por você.
+          </h2>
+
+        </div>
+
+        <p class="section-note">
+          Uma seleção enxuta de peças essenciais,
+          pensadas para combinar entre si.
+        </p>
+
+      </div>
+
+
+      <!-- FILTROS -->
+      <div class="filters">
+
+        <button
+          class="filter active"
+          data-filter="all"
+        >
+          Todos
+        </button>
+
+        <button
+          class="filter"
+          data-filter="camisetas"
+        >
+          Camisetas
+        </button>
+
+        <button
+          class="filter"
+          data-filter="moletons"
+        >
+          Moletons
+        </button>
+
+        <button
+          class="filter"
+          data-filter="calcas"
+        >
+          Calças
+        </button>
+
+        <button
+          class="filter"
+          data-filter="acessorios"
+        >
+          Acessórios
+        </button>
+
+      </div>
+
+
+      <!-- PRODUTOS -->
+      <div
+        class="products"
+        id="products"
+      ></div>
+
+    </section>
+
+
+    <!-- ESSENCIAIS -->
+    <section
+      id="essenciais"
+      class="feature"
+    >
+
+      <div class="feature-image">
+
+        <div class="feature-mark">
+          N
+        </div>
+
+      </div>
+
+
+      <div class="feature-copy">
+
+        <p class="eyebrow">
+          02 — ESSENCIAIS
+        </p>
+
+        <h2>
+          Menos ruído.<br>
+          Mais identidade.
+        </h2>
+
+        <p>
+          Modelagens contemporâneas, detalhes discretos
+          e uma paleta pensada para atravessar temporadas.
+          O foco está no que realmente importa: a peça.
+        </p>
+
+        <a
+          href="#colecao"
+          class="btn btn-dark"
+        >
+          Explorar peças
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- MANIFESTO -->
+    <section
+      id="sobre"
+      class="manifesto"
+    >
+
+      <p class="eyebrow">
+        03 — MANIFESTO
+      </p>
+
+      <h2>
+        Não seguimos<br>
+        o movimento.<br>
+        <em>Nós criamos o nosso.</em>
+      </h2>
+
+    </section>
+
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter">
+
+      <div>
+
+        <p class="eyebrow">
+          DROP PRIVADO
+        </p>
+
+        <h2>
+          Entre primeiro.
+        </h2>
+
+        <p>
+          Receba lançamentos, drops limitados
+          e condições exclusivas.
+        </p>
+
+      </div>
+
+
+      <form onsubmit="subscribe(event)">
+
+        <input
+          type="email"
+          placeholder="seu@email.com"
+          required
+        >
+
+        <button class="btn btn-light">
+          Entrar
+        </button>
+
+      </form>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="footer-logo">
+      NOME<span>.</span>
+    </div>
+
+
+    <div class="footer-links">
+
+      <a href="#">
+        Instagram
+      </a>
+
+      <a href="#">
+        TikTok
+      </a>
+
+      <a href="#">
+        Termos
+      </a>
+
+      <a href="#">
+        Privacidade
+      </a>
+
+    </div>
+
+
+    <p>
+      © 2026 NOME. Todos os direitos reservados.
+    </p>
+
+  </footer>
+
+
+  <!-- MODAL DO PRODUTO -->
+  <div
+    class="modal"
+    id="productModal"
+  >
+
+    <div class="modal-box">
+
+      <button
+        class="close"
+        onclick="closeProduct()"
+      >
+        ×
+      </button>
+
+
+      <div class="modal-product">
+
+        <div
+          class="product-visual"
+          id="modalVisual"
+        ></div>
+
+
+        <div>
+
+          <p
+            class="eyebrow"
+            id="modalCategory"
+          ></p>
+
+          <h2 id="modalName"></h2>
+
+          <p
+            class="price"
+            id="modalPrice"
+          ></p>
+
+          <p
+            class="modal-desc"
+            id="modalDesc"
+          ></p>
+
+
+          <label>
+            Tamanho
+          </label>
+
+
+          <div
+            class="sizes"
+            id="modalSizes"
+          ></div>
+
+
+          <button
+            class="btn btn-dark full"
+            onclick="addCurrent()"
+          >
+            Adicionar à sacola
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- SACOLA -->
+  <aside
+    class="cart-drawer"
+    id="cartDrawer"
+  >
+
+    <div class="cart-head">
+
+      <h2>
+        Sua sacola
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeCart()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      id="cartItems"
+      class="cart-items"
+    ></div>
+
+
+    <div class="cart-bottom">
+
+      <div>
+
+        <span>
+          Subtotal
+        </span>
+
+        <strong id="cartTotal">
+          R$ 0,00
+        </strong>
+
+      </div>
+
+
+      <button
+        class="btn btn-dark full"
+        onclick="checkout()"
+      >
+        Finalizar compra
+      </button>
+
+
+      <small>
+        Você será direcionado para o checkout.
+      </small>
+
+    </div>
+
+  </aside>
+
+
+  <!-- FUNDO DA SACOLA -->
+  <div
+    class="overlay"
+    id="overlay"
+    onclick="closeCart()"
+  ></div>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js"></script>
+
+</body>
+</html>
