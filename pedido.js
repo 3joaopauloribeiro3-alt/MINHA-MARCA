@@ -24,7 +24,7 @@ function translateStatus(status) {
         canceled: "Cancelado"
     };
 
-    return statuses[status] || status || "Em análise";
+    return statuses[status] || "Em análise";
 }
 
 async function loadOrder() {
@@ -63,11 +63,17 @@ async function loadOrder() {
 
         document.getElementById("orderContainer").innerHTML = `
             <div class="order-error">
+
                 <h2>Pedido não encontrado</h2>
+
                 <p>
                     Não encontramos esse pedido na sua conta.
                 </p>
-                <a href="pedidos.html">Voltar aos pedidos</a>
+
+                <a href="pedidos.html">
+                    VOLTAR AOS PEDIDOS
+                </a>
+
             </div>
         `;
 
@@ -82,7 +88,7 @@ async function loadOrder() {
         .eq("order_id", order.id);
 
     if (itemsError) {
-        console.error(itemsError);
+        console.error("Erro ao carregar itens:", itemsError);
     }
 
     renderOrder(order, items || []);
@@ -90,80 +96,253 @@ async function loadOrder() {
 
 function renderOrder(order, items) {
 
-    document.title = `Pedido #${String(order.id).slice(0, 8)} | GUIP`;
+    document.title =
+        `Pedido #${String(order.id).slice(0, 8)} | GUIP`;
 
-    document.getElementById("orderNumber").textContent =
-        `#${String(order.id).slice(0, 8).toUpperCase()}`;
-
-    document.getElementById("orderStatus").textContent =
-        translateStatus(order.status);
-
-    document.getElementById("orderTotal").textContent =
-        orderPrice(order.total);
-
-    if (order.created_at) {
-
-        const date = new Date(order.created_at);
-
-        document.getElementById("orderDate").textContent =
-            date.toLocaleDateString("pt-BR", {
+    const date = order.created_at
+        ? new Date(order.created_at).toLocaleDateString(
+            "pt-BR",
+            {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric"
-            });
-    }
+            }
+        )
+        : "—";
 
-    const container = document.getElementById("orderItems");
+    const itemsHTML = items.length
+        ? items.map(item => {
 
-    container.innerHTML = items.map(item => {
+            const image =
+                item.image_url ||
+                "https://placehold.co/200x250/f5f5f5/111111?text=GUIP";
 
-        const image =
-            item.image_url ||
-            "https://placehold.co/120x150/f5f5f5/111111?text=GUIP";
+            const quantity =
+                Number(item.quantity || 1);
 
-        return `
-            <div class="order-item">
+            const price =
+                Number(item.price || 0);
 
-                <img src="${image}" alt="${item.product_name || "Produto"}">
+            return `
+                <div class="order-item">
 
-                <div class="order-item-info">
+                    <img
+                        src="${image}"
+                        alt="${item.product_name || "Produto GUIP"}"
+                    >
 
-                    <strong>
-                        ${item.product_name || "Produto GUIP"}
-                    </strong>
+                    <div class="order-item-info">
 
-                    <span>
-                        Quantidade: ${item.quantity || 1}
-                    </span>
+                        <strong>
+                            ${item.product_name || "Produto GUIP"}
+                        </strong>
 
-                    ${
-                        item.size
-                            ? `<span>Tamanho: ${item.size}</span>`
-                            : ""
-                    }
+                        <span>
+                            Quantidade: ${quantity}
+                        </span>
+
+                        ${
+                            item.size
+                                ? `
+                                    <span>
+                                        Tamanho: ${item.size}
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+                    <div class="order-item-price">
+                        ${orderPrice(price * quantity)}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("")
+        : `
+            <p style="padding:25px 0;color:#777;">
+                Nenhum item encontrado neste pedido.
+            </p>
+        `;
+
+    const shippingValue =
+        order.shipping_total ||
+        order.shipping_cost ||
+        0;
+
+    document.getElementById("orderContainer").innerHTML = `
+
+        <header class="order-header">
+
+            <div class="order-kicker">
+                GUIP / PEDIDO
+            </div>
+
+            <h1 class="order-title">
+                SEU PEDIDO
+            </h1>
+
+            <div class="order-number">
+                Pedido #${String(order.id)
+                    .slice(0, 8)
+                    .toUpperCase()}
+            </div>
+
+        </header>
+
+
+        <div class="order-status-box">
+
+            <div>
+
+                <div class="status-label">
+                    Status
+                </div>
+
+                <div class="status-value">
+                    ${translateStatus(order.status)}
+                </div>
+
+            </div>
+
+
+            <div class="order-date">
+
+                <div class="status-label">
+                    Data do pedido
+                </div>
+
+                <div class="status-value">
+                    ${date}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="order-grid">
+
+            <section>
+
+                <div class="order-section">
+
+                    <h2 class="order-section-title">
+                        Produtos
+                    </h2>
+
+                    <div class="order-items">
+                        ${itemsHTML}
+                    </div>
 
                 </div>
 
-                <strong>
-                    ${orderPrice(
-                        Number(item.price) *
-                        Number(item.quantity || 1)
-                    )}
-                </strong>
 
-            </div>
-        `;
+                <div class="order-section">
 
-    }).join("");
+                    <h2 class="order-section-title">
+                        Pagamento
+                    </h2>
 
-    const shipping = document.getElementById("orderShipping");
+                    <div class="payment-box">
 
-    if (shipping) {
-        shipping.textContent =
-            order.shipping_total
-                ? orderPrice(order.shipping_total)
-                : "A calcular";
-    }
+                        <strong>
+                            ${
+                                order.payment_method === "pix"
+                                    ? "PIX"
+                                    : (
+                                        order.payment_method ||
+                                        "Pagamento"
+                                    )
+                            }
+                        </strong>
+
+                        <span>
+                            Status:
+                            ${translateStatus(order.status)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <aside class="order-summary">
+
+                <div class="summary-title">
+                    RESUMO
+                </div>
+
+                <div class="summary-row">
+
+                    <span>
+                        Produtos
+                    </span>
+
+                    <strong>
+                        ${orderPrice(order.total)}
+                    </strong>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>
+                        Entrega
+                    </span>
+
+                    <strong>
+                        ${
+                            shippingValue > 0
+                                ? orderPrice(shippingValue)
+                                : "A calcular"
+                        }
+                    </strong>
+
+                </div>
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span>
+                        ${orderPrice(order.total)}
+                    </span>
+
+                </div>
+
+
+                <div class="order-actions">
+
+                    <a
+                        href="pedidos.html"
+                        class="order-button"
+                    >
+                        MEUS PEDIDOS
+                    </a>
+
+                    <a
+                        href="index.html#shop"
+                        class="order-button secondary"
+                    >
+                        CONTINUAR COMPRANDO
+                    </a>
+
+                </div>
+
+            </aside>
+
+        </div>
+    `;
 }
 
-document.addEventListener("DOMContentLoaded", loadOrder);
+document.addEventListener(
+    "DOMContentLoaded",
+    loadOrder
+);
