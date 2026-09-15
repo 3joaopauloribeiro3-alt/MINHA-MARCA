@@ -1,232 +1,191 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="description"
-    content="Crie sua conta NOME."
-  >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Criar conta — NOME</title>
+    <title>Criar conta — GUIP</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="auth-page">
+<body>
 
-  <!-- HEADER -->
+<header class="simple-header">
 
-  <header class="header auth-header">
-
-    <a href="index.html" class="brand">
-      NOME<span>.</span>
+    <a href="index.html">
+        <img src="logo.svg" alt="GUIP">
     </a>
 
-    <a href="index.html" class="auth-back">
-      ← Voltar para a loja
-    </a>
-
-  </header>
+</header>
 
 
-  <!-- CADASTRO -->
+<main class="auth-page">
 
-  <main class="auth-main">
+    <div class="auth-box">
 
-    <section class="auth-card">
+        <span class="eyebrow">GUIP ACCOUNT</span>
 
-      <div class="auth-heading">
+        <h1>Criar conta</h1>
 
-        <span class="section-label">
-          NOVO CLIENTE
-        </span>
-
-        <h1>
-          CRIE SUA<br>
-          <em>CONTA.</em>
-        </h1>
-
-        <p>
-          Crie sua conta para acompanhar pedidos e ter uma experiência melhor na NOME.
+        <p class="auth-subtitle">
+            Crie sua conta para comprar e acompanhar seus pedidos.
         </p>
 
-      </div>
+
+        <form id="registerForm">
+
+            <label>
+                Nome
+                <input
+                    type="text"
+                    id="name"
+                    required
+                    autocomplete="name"
+                >
+            </label>
 
 
-      <!-- FORMULÁRIO -->
-
-      <form
-        class="auth-form"
-        onsubmit="registerUser(event)"
-      >
-
-        <div class="form-field">
-
-          <label for="registerName">
-            NOME COMPLETO
-          </label>
-
-          <input
-            id="registerName"
-            name="name"
-            type="text"
-            autocomplete="name"
-            placeholder="Seu nome completo"
-            required
-          >
-
-        </div>
+            <label>
+                E-mail
+                <input
+                    type="email"
+                    id="email"
+                    required
+                    autocomplete="email"
+                >
+            </label>
 
 
-        <div class="form-field">
-
-          <label for="registerEmail">
-            E-MAIL
-          </label>
-
-          <input
-            id="registerEmail"
-            name="email"
-            type="email"
-            autocomplete="email"
-            placeholder="seu@email.com"
-            required
-          >
-
-        </div>
+            <label>
+                Senha
+                <input
+                    type="password"
+                    id="password"
+                    minlength="6"
+                    required
+                    autocomplete="new-password"
+                >
+            </label>
 
 
-        <div class="form-field">
-
-          <label for="registerPassword">
-            SENHA
-          </label>
-
-          <input
-            id="registerPassword"
-            name="password"
-            type="password"
-            autocomplete="new-password"
-            placeholder="Mínimo de 6 caracteres"
-            minlength="6"
-            required
-          >
-
-        </div>
+            <label>
+                Confirmar senha
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    minlength="6"
+                    required
+                    autocomplete="new-password"
+                >
+            </label>
 
 
-        <div class="form-field">
+            <button class="primary-button" type="submit">
+                CRIAR CONTA
+            </button>
 
-          <label for="registerPasswordConfirm">
-            CONFIRMAR SENHA
-          </label>
-
-          <input
-            id="registerPasswordConfirm"
-            name="passwordConfirm"
-            type="password"
-            autocomplete="new-password"
-            placeholder="Digite a senha novamente"
-            minlength="6"
-            required
-          >
-
-        </div>
+        </form>
 
 
-        <!-- MENSAGEM -->
-
-        <div
-          id="registerMessage"
-          class="auth-message"
-          style="display:none;"
-        ></div>
+        <p id="registerMessage" class="form-message"></p>
 
 
-        <!-- TERMOS -->
+        <div class="auth-links">
 
-        <label class="auth-checkbox">
+            <span>Já possui uma conta?</span>
 
-          <input
-            type="checkbox"
-            id="registerTerms"
-            required
-          >
-
-          <span>
-            Concordo com os
-            <a href="termos.html" target="_blank">
-              Termos e Condições
+            <a href="login.html">
+                Entrar
             </a>
-            e a
-            <a href="privacidade.html" target="_blank">
-              Política de Privacidade
-            </a>.
-          </span>
 
-        </label>
-
-
-        <button
-          type="submit"
-          class="button button-black auth-submit"
-        >
-          CRIAR CONTA
-        </button>
-
-      </form>
-
-
-      <!-- LOGIN -->
-
-      <div class="auth-divider">
-        <span>JÁ POSSUI UMA CONTA?</span>
-      </div>
-
-      <a
-        href="login.html"
-        class="button button-outline auth-register"
-      >
-        ENTRAR
-      </a>
-
-    </section>
-
-  </main>
-
-
-  <!-- FOOTER -->
-
-  <footer class="auth-footer">
-
-    <div class="footer-bottom">
-
-      <span>
-        © 2026 NOME.
-      </span>
-
-      <span>
-        TODOS OS DIREITOS RESERVADOS.
-      </span>
+        </div>
 
     </div>
 
-  </footer>
+</main>
 
 
-  <!-- SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
 
-  <script src="auth.js"></script>
+<script>
+
+document
+    .getElementById("registerForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const confirm =
+            document.getElementById("confirmPassword").value;
+
+        const message =
+            document.getElementById("registerMessage");
+
+        const button =
+            this.querySelector("button");
+
+
+        if (password !== confirm) {
+
+            message.textContent =
+                "As senhas não são iguais.";
+
+            return;
+        }
+
+
+        button.disabled = true;
+        button.textContent = "CRIANDO...";
+        message.textContent = "";
+
+
+        const result =
+            await registerUser(name, email, password);
+
+
+        if (!result.success) {
+
+            message.textContent =
+                result.error || "Não foi possível criar a conta.";
+
+            button.disabled = false;
+            button.textContent = "CRIAR CONTA";
+
+            return;
+        }
+
+
+        if (result.session) {
+
+            window.location.href = "conta.html";
+
+        } else {
+
+            message.textContent =
+                "Conta criada! Verifique seu e-mail para confirmar o cadastro.";
+
+            button.disabled = false;
+            button.textContent = "CRIAR CONTA";
+        }
+
+    });
+
+</script>
 
 </body>
 </html>
