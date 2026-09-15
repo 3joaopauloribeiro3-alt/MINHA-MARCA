@@ -1,303 +1,274 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Marca | GUIP</title>
+    <meta name="description" content="Conheça a GUIP. Streetwear feito para quem não segue padrão.">
+    <link rel="stylesheet" href="style.css">
 
-  <meta charset="UTF-8">
+    <style>
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 24px 120px;
+        }
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+        .page-hero {
+            padding: 70px 0 90px;
+            border-bottom: 1px solid #e8e8e8;
+        }
 
-  <meta
-    name="description"
-    content="Conheça a NOME — uma marca de streetwear criada para quem transforma presença em identidade."
-  >
+        .page-kicker {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
 
-  <title>A Marca — NOME</title>
+        .page-title {
+            font-size: clamp(48px, 9vw, 110px);
+            line-height: .9;
+            letter-spacing: -.06em;
+            margin: 0;
+            max-width: 900px;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            padding: 90px 0;
+        }
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+        .about-block h2 {
+            font-size: 32px;
+            letter-spacing: -.04em;
+            margin-bottom: 22px;
+        }
 
-  <link rel="stylesheet" href="style.css">
+        .about-block p {
+            color: #555;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
 
+        .about-statement {
+            background: #111;
+            color: #fff;
+            padding: 80px 50px;
+            margin: 20px 0 90px;
+        }
+
+        .about-statement p {
+            max-width: 900px;
+            font-size: clamp(30px, 5vw, 64px);
+            line-height: 1;
+            letter-spacing: -.05em;
+            margin: 0;
+        }
+
+        .about-values {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid #ddd;
+        }
+
+        .value {
+            padding: 35px 25px 35px 0;
+            border-right: 1px solid #ddd;
+        }
+
+        .value:not(:first-child) {
+            padding-left: 25px;
+        }
+
+        .value:last-child {
+            border-right: 0;
+        }
+
+        .value span {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .15em;
+            margin-bottom: 18px;
+        }
+
+        .value h3 {
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+
+        .value p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        @media(max-width: 700px) {
+            .page-content {
+                padding: 50px 20px 80px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 45px;
+                padding: 60px 0;
+            }
+
+            .about-statement {
+                padding: 55px 25px;
+                margin-bottom: 60px;
+            }
+
+            .about-values {
+                grid-template-columns: 1fr;
+            }
+
+            .value,
+            .value:not(:first-child) {
+                padding: 30px 0;
+                border-right: 0;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .value:last-child {
+                border-bottom: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <header class="header">
+<header class="site-header">
+    <div class="header-inner">
+        <a href="index.html" class="brand-logo">
+            <img src="logo.svg" alt="GUIP">
+        </a>
 
-    <a href="index.html" class="brand">
-      NOME<span>.</span>
-    </a>
+        <nav class="main-nav">
+            <a href="index.html#drop">DROP</a>
+            <a href="index.html#shop">SHOP</a>
+            <a href="sobre.html">A MARCA</a>
+        </nav>
 
-    <nav class="desktop-nav">
-
-      <a href="index.html#drop">
-        DROP 01
-      </a>
-
-      <a href="index.html#produtos">
-        PRODUTOS
-      </a>
-
-      <a href="index.html#marca">
-        A MARCA
-      </a>
-
-    </nav>
-
-    <div class="header-actions">
-
-      <a
-        href="login.html"
-        class="account-link"
-      >
-        Conta
-      </a>
-
-      <a
-        href="index.html#produtos"
-        class="cart-button"
-      >
-        Loja
-      </a>
-
+        <div class="header-actions">
+            <a href="login.html" aria-label="Conta">◯</a>
+            <a href="index.html#shop" aria-label="Carrinho">□</a>
+        </div>
     </div>
+</header>
 
-  </header>
+<main class="page-content">
 
-
-  <main class="about-page">
-
-    <section class="about-hero">
-
-      <span class="section-label">
-        02 — OUR WORLD
-      </span>
-
-      <h1>
-        NÃO É SÓ<br>
-        <em>ROUPA.</em>
-      </h1>
-
-      <p>
-        É identidade. É presença.
-        É o jeito que você escolhe ocupar o mundo.
-      </p>
-
+    <section class="page-hero">
+        <div class="page-kicker">A MARCA</div>
+        <h1 class="page-title">GUIP NÃO É SÓ ROUPA.</h1>
     </section>
 
+    <section class="about-grid">
 
-    <section class="about-content">
+        <div class="about-block">
+            <h2>Quem somos</h2>
 
-      <div class="about-number">
-        01
-      </div>
+            <p>
+                A GUIP nasceu com uma ideia simples: criar roupas que tenham
+                identidade própria e façam parte da vida de quem usa.
+            </p>
 
-      <div class="about-text">
+            <p>
+                Nossa proposta une estética streetwear, peças versáteis e uma
+                construção visual minimalista, sem depender de tendências
+                passageiras.
+            </p>
+        </div>
 
-        <span class="section-label">
-          NOSSA VISÃO
-        </span>
+        <div class="about-block">
+            <h2>Nosso jeito</h2>
 
-        <h2>
-          VISTA<br>
-          SUA PRESENÇA.
-        </h2>
+            <p>
+                Acreditamos que estilo não precisa seguir uma fórmula.
+                Cada pessoa combina, transforma e usa uma peça do seu próprio jeito.
+            </p>
 
-        <p>
-          A NOME nasceu da ideia de que roupa não
-          precisa apenas acompanhar quem você é.
-          Ela pode fazer parte daquilo que você
-          transmite.
-        </p>
-
-        <p>
-          Criamos peças inspiradas pela cultura
-          urbana, pela música, pela arte e pelas
-          pessoas que não precisam seguir um padrão
-          para construir seu próprio caminho.
-        </p>
-
-      </div>
+            <p>
+                Por isso, a GUIP busca criar produtos que funcionem tanto
+                individualmente quanto dentro de diferentes composições.
+            </p>
+        </div>
 
     </section>
-
 
     <section class="about-statement">
+        <p>
+            FEITO PRA QUEM NÃO SEGUE PADRÃO.
+        </p>
+    </section>
 
-      <span>
-        STAY DIFFERENT.
-      </span>
+    <section class="about-values">
 
-      <strong>
-        CREATE<br>
-        YOUR<br>
-        OWN.
-      </strong>
+        <div class="value">
+            <span>01</span>
+            <h3>IDENTIDADE</h3>
+            <p>
+                Uma estética própria, construída para não depender de excessos.
+            </p>
+        </div>
+
+        <div class="value">
+            <span>02</span>
+            <h3>QUALIDADE</h3>
+            <p>
+                Atenção aos materiais, caimento e detalhes de cada produto.
+            </p>
+        </div>
+
+        <div class="value">
+            <span>03</span>
+            <h3>LIBERDADE</h3>
+            <p>
+                Você veste a GUIP do seu jeito. Não existe uma única maneira.
+            </p>
+        </div>
 
     </section>
 
+</main>
 
-    <section class="about-content about-content-reverse">
+<footer class="site-footer">
+    <div class="footer-inner">
 
-      <div class="about-number">
-        02
-      </div>
+        <div class="footer-brand">
+            <img src="logo.svg" alt="GUIP">
+            <p>Streetwear para quem não segue padrão.</p>
+        </div>
 
-      <div class="about-text">
+        <div class="footer-links">
+            <div>
+                <strong>GUIP</strong>
+                <a href="sobre.html">A Marca</a>
+                <a href="index.html#shop">Shop</a>
+            </div>
 
-        <span class="section-label">
-          NOSSO PRODUTO
-        </span>
+            <div>
+                <strong>SUPORTE</strong>
+                <a href="envio.html">Envio</a>
+                <a href="trocas.html">Trocas</a>
+                <a href="conta.html">Minha conta</a>
+            </div>
 
-        <h2>
-          FEITO PARA<br>
-          DURAR.
-        </h2>
-
-        <p>
-          Trabalhamos com materiais e construções
-          pensados para transformar peças essenciais
-          em itens que continuam relevantes além de
-          uma temporada.
-        </p>
-
-        <p>
-          Menos excesso. Mais intenção.
-        </p>
-
-        <a
-          href="index.html#produtos"
-          class="button button-black"
-        >
-          VER COLEÇÃO
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <section class="about-final">
-
-      <span class="section-label">
-        NOME / 2026
-      </span>
-
-      <h2>
-        O MOVIMENTO<br>
-        <em>COMEÇA EM VOCÊ.</em>
-      </h2>
-
-    </section>
-
-  </main>
-
-
-  <footer>
-
-    <div class="footer-top">
-
-      <div class="footer-brand">
-
-        <a href="index.html" class="brand">
-          NOME<span>.</span>
-        </a>
-
-        <p>
-          Streetwear para quem cria seu próprio movimento.
-        </p>
-
-      </div>
-
-
-      <div class="footer-column">
-
-        <h4>LOJA</h4>
-
-        <a href="index.html#produtos">
-          Todos os produtos
-        </a>
-
-        <a href="index.html#produtos">
-          Camisetas
-        </a>
-
-        <a href="index.html#produtos">
-          Moletons
-        </a>
-
-        <a href="index.html#produtos">
-          Calças
-        </a>
-
-      </div>
-
-
-      <div class="footer-column">
-
-        <h4>AJUDA</h4>
-
-        <a href="envio.html">
-          Envio
-        </a>
-
-        <a href="trocas.html">
-          Trocas e devoluções
-        </a>
-
-        <a href="termos.html">
-          Termos
-        </a>
-
-        <a href="privacidade.html">
-          Privacidade
-        </a>
-
-      </div>
-
-
-      <div class="footer-column">
-
-        <h4>CONTATO</h4>
-
-        <a href="#">
-          Instagram
-        </a>
-
-        <a href="#">
-          TikTok
-        </a>
-
-        <a href="#">
-          E-mail
-        </a>
-
-      </div>
+            <div>
+                <strong>LEGAL</strong>
+                <a href="termos.html">Termos</a>
+                <a href="privacidade.html">Privacidade</a>
+            </div>
+        </div>
 
     </div>
-
-
-    <div class="footer-bottom">
-
-      <span>
-        © 2026 NOME.
-      </span>
-
-      <span>
-        TODOS OS DIREITOS RESERVADOS.
-      </span>
-
-    </div>
-
-  </footer>
+</footer>
 
 </body>
 </html>
