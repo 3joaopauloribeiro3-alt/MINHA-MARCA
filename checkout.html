@@ -1,668 +1,389 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="description"
-    content="Checkout — NOME Streetwear"
-  >
+    <title>Checkout | GUIP</title>
 
-  <title>Checkout — NOME</title>
+    <link rel="stylesheet" href="style.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        .checkout-page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 70px 24px 110px;
+        }
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+        .checkout-title {
+            font-size: clamp(45px, 8vw, 80px);
+            letter-spacing: -.06em;
+            line-height: .9;
+            margin-bottom: 60px;
+        }
 
-  <link rel="stylesheet" href="style.css">
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 70px;
+        }
+
+        .checkout-section {
+            border-top: 1px solid #ddd;
+            padding-top: 28px;
+            margin-bottom: 45px;
+        }
+
+        .checkout-section h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            padding: 15px;
+            background: #fff;
+            font: inherit;
+            outline: none;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #111;
+        }
+
+        .payment-option {
+            border: 1px solid #ccc;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .payment-option.active {
+            border-color: #111;
+        }
+
+        .payment-option label {
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .checkout-summary {
+            background: #f5f5f5;
+            padding: 30px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .summary-title {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        .summary-item {
+            display: grid;
+            grid-template-columns: 70px 1fr auto;
+            gap: 14px;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            align-items: center;
+        }
+
+        .summary-item img {
+            width: 70px;
+            height: 85px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .summary-item-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .summary-item-meta {
+            color: #777;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .summary-item-price {
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 18px;
+            color: #555;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #111;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .checkout-button {
+            width: 100%;
+            border: 0;
+            background: #111;
+            color: #fff;
+            padding: 18px;
+            margin-top: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: .04em;
+        }
+
+        .checkout-button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .checkout-message {
+            display: none;
+            margin-top: 15px;
+            padding: 14px;
+            background: #eee;
+            font-size: 14px;
+        }
+
+        .checkout-message.show {
+            display: block;
+        }
+
+        @media(max-width: 850px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .checkout-summary {
+                position: static;
+            }
+        }
+
+        @media(max-width: 550px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+
+            .checkout-page {
+                padding: 45px 20px 80px;
+            }
+        }
+    </style>
 </head>
 
-<body class="checkout-page">
+<body>
 
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
+<header class="site-header">
+    <div class="header-inner">
 
-  <header class="header checkout-header">
+        <a href="index.html" class="brand-logo">
+            <img src="logo.svg" alt="GUIP">
+        </a>
 
-    <a href="index.html" class="brand">
-      NOME<span>.</span>
-    </a>
+        <nav class="main-nav">
+            <a href="index.html#drop">DROP</a>
+            <a href="index.html#shop">SHOP</a>
+            <a href="sobre.html">A MARCA</a>
+        </nav>
 
-    <div class="checkout-security">
-      COMPRA SEGURA
+        <div class="header-actions">
+            <a href="conta.html">Conta</a>
+            <a href="index.html">Voltar</a>
+        </div>
+
     </div>
+</header>
 
-  </header>
+<main class="checkout-page">
 
+    <h1 class="checkout-title">CHECKOUT</h1>
 
-  <!-- =====================================================
-       CHECKOUT
-       ===================================================== -->
+    <div class="checkout-layout">
 
-  <main class="checkout-main">
+        <section>
 
-    <div class="checkout-container">
+            <div class="checkout-section">
 
-      <!-- =================================================
-           CABEÇALHO
-           ================================================= -->
+                <h2>Dados de entrega</h2>
 
-      <section class="checkout-heading">
+                <form id="checkoutForm">
 
-        <span class="section-label">
-          CHECKOUT
-        </span>
+                    <div class="form-grid">
 
-        <h1>
-          FINALIZE<br>
-          <em>SUA COMPRA.</em>
-        </h1>
+                        <div class="field full">
+                            <label for="fullName">Nome completo</label>
+                            <input id="fullName" type="text" required>
+                        </div>
 
-      </section>
+                        <div class="field">
+                            <label for="email">E-mail</label>
+                            <input id="email" type="email" readonly>
+                        </div>
 
+                        <div class="field">
+                            <label for="phone">Telefone</label>
+                            <input id="phone" type="tel" required>
+                        </div>
 
-      <!-- =================================================
-           LAYOUT
-           ================================================= -->
+                        <div class="field">
+                            <label for="cep">CEP</label>
+                            <input id="cep" type="text" maxlength="9" required>
+                        </div>
 
-      <div class="checkout-grid">
+                        <div class="field">
+                            <label for="state">Estado</label>
+                            <input id="state" type="text" required>
+                        </div>
 
+                        <div class="field full">
+                            <label for="city">Cidade</label>
+                            <input id="city" type="text" required>
+                        </div>
 
-        <!-- =================================================
-             FORMULÁRIO
-             ================================================= -->
+                        <div class="field">
+                            <label for="street">Rua</label>
+                            <input id="street" type="text" required>
+                        </div>
 
-        <section class="checkout-form-section">
+                        <div class="field">
+                            <label for="number">Número</label>
+                            <input id="number" type="text" required>
+                        </div>
 
-          <form
-            id="checkoutForm"
-            class="checkout-form"
-            onsubmit="finishOrder(event)"
-          >
+                        <div class="field">
+                            <label for="complement">Complemento</label>
+                            <input id="complement" type="text">
+                        </div>
 
-            <!-- DADOS -->
+                        <div class="field">
+                            <label for="neighborhood">Bairro</label>
+                            <input id="neighborhood" type="text" required>
+                        </div>
 
-            <div class="checkout-block">
+                    </div>
 
-              <div class="checkout-block-heading">
-
-                <span>01</span>
-
-                <div>
-                  <h2>
-                    SEUS DADOS
-                  </h2>
-
-                  <p>
-                    Informações para contato.
-                  </p>
-                </div>
-
-              </div>
-
-
-              <div class="checkout-fields">
-
-                <div class="form-field">
-
-                  <label for="checkoutName">
-                    NOME COMPLETO
-                  </label>
-
-                  <input
-                    id="checkoutName"
-                    type="text"
-                    autocomplete="name"
-                    required
-                  >
-
-                </div>
-
-
-                <div class="form-field">
-
-                  <label for="checkoutEmail">
-                    E-MAIL
-                  </label>
-
-                  <input
-                    id="checkoutEmail"
-                    type="email"
-                    autocomplete="email"
-                    required
-                  >
-
-                </div>
-
-
-                <div class="form-field">
-
-                  <label for="checkoutPhone">
-                    TELEFONE / WHATSAPP
-                  </label>
-
-                  <input
-                    id="checkoutPhone"
-                    type="tel"
-                    autocomplete="tel"
-                    placeholder="(00) 00000-0000"
-                    required
-                  >
-
-                </div>
-
-              </div>
+                </form>
 
             </div>
 
+            <div class="checkout-section">
 
-            <!-- ENDEREÇO -->
+                <h2>Pagamento</h2>
 
-            <div class="checkout-block">
-
-              <div class="checkout-block-heading">
-
-                <span>02</span>
-
-                <div>
-                  <h2>
-                    ENTREGA
-                  </h2>
-
-                  <p>
-                    Para onde devemos enviar seu pedido?
-                  </p>
-                </div>
-
-              </div>
-
-
-              <div class="checkout-fields">
-
-                <div class="form-field">
-
-                  <label for="checkoutCep">
-                    CEP
-                  </label>
-
-                  <input
-                    id="checkoutCep"
-                    type="text"
-                    inputmode="numeric"
-                    autocomplete="postal-code"
-                    placeholder="00000-000"
-                    maxlength="9"
-                    required
-                  >
-
-                </div>
-
-
-                <div class="form-field">
-
-                  <label for="checkoutAddress">
-                    ENDEREÇO
-                  </label>
-
-                  <input
-                    id="checkoutAddress"
-                    type="text"
-                    autocomplete="street-address"
-                    placeholder="Rua, avenida..."
-                    required
-                  >
-
-                </div>
-
-
-                <div class="checkout-two-columns">
-
-                  <div class="form-field">
-
-                    <label for="checkoutNumber">
-                      NÚMERO
+                <div class="payment-option active">
+                    <label>
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="pix"
+                            checked
+                        >
+                        PIX
                     </label>
 
-                    <input
-                      id="checkoutNumber"
-                      type="text"
-                      required
-                    >
-
-                  </div>
-
-
-                  <div class="form-field">
-
-                    <label for="checkoutComplement">
-                      COMPLEMENTO
-                    </label>
-
-                    <input
-                      id="checkoutComplement"
-                      type="text"
-                      placeholder="Opcional"
-                    >
-
-                  </div>
-
+                    <p style="margin:12px 0 0 27px;color:#666;font-size:14px;">
+                        O pagamento será realizado através do método PIX.
+                    </p>
                 </div>
-
-
-                <div class="checkout-two-columns">
-
-                  <div class="form-field">
-
-                    <label for="checkoutNeighborhood">
-                      BAIRRO
-                    </label>
-
-                    <input
-                      id="checkoutNeighborhood"
-                      type="text"
-                      required
-                    >
-
-                  </div>
-
-
-                  <div class="form-field">
-
-                    <label for="checkoutCity">
-                      CIDADE
-                    </label>
-
-                    <input
-                      id="checkoutCity"
-                      type="text"
-                      autocomplete="address-level2"
-                      required
-                    >
-
-                  </div>
-
-                </div>
-
-
-                <div class="form-field">
-
-                  <label for="checkoutState">
-                    ESTADO
-                  </label>
-
-                  <select
-                    id="checkoutState"
-                    required
-                  >
-
-                    <option value="">
-                      Selecione
-                    </option>
-
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapá</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceará</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="ES">Espírito Santo</option>
-                    <option value="GO">Goiás</option>
-                    <option value="MA">Maranhão</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Pará</option>
-                    <option value="PB">Paraíba</option>
-                    <option value="PR">Paraná</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piauí</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondônia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>
-
-                  </select>
-
-                </div>
-
-              </div>
 
             </div>
-
-
-            <!-- FRETE -->
-
-            <div class="checkout-block">
-
-              <div class="checkout-block-heading">
-
-                <span>03</span>
-
-                <div>
-                  <h2>
-                    ENVIO
-                  </h2>
-
-                  <p>
-                    Escolha uma opção de entrega.
-                  </p>
-                </div>
-
-              </div>
-
-
-              <div class="shipping-options">
-
-                <label class="shipping-option">
-
-                  <input
-                    type="radio"
-                    name="shipping"
-                    value="standard"
-                    data-price="19.90"
-                    checked
-                  >
-
-                  <span class="shipping-option-content">
-
-                    <strong>
-                      ENVIO PADRÃO
-                    </strong>
-
-                    <small>
-                      5 a 10 dias úteis
-                    </small>
-
-                  </span>
-
-                  <strong>
-                    R$ 19,90
-                  </strong>
-
-                </label>
-
-
-                <label class="shipping-option">
-
-                  <input
-                    type="radio"
-                    name="shipping"
-                    value="express"
-                    data-price="34.90"
-                  >
-
-                  <span class="shipping-option-content">
-
-                    <strong>
-                      ENVIO EXPRESSO
-                    </strong>
-
-                    <small>
-                      2 a 5 dias úteis
-                    </small>
-
-                  </span>
-
-                  <strong>
-                    R$ 34,90
-                  </strong>
-
-                </label>
-
-
-                <label class="shipping-option">
-
-                  <input
-                    type="radio"
-                    name="shipping"
-                    value="free"
-                    data-price="0"
-                  >
-
-                  <span class="shipping-option-content">
-
-                    <strong>
-                      FRETE GRÁTIS
-                    </strong>
-
-                    <small>
-                      Para pedidos acima de R$ 299
-                    </small>
-
-                  </span>
-
-                  <strong>
-                    GRÁTIS
-                  </strong>
-
-                </label>
-
-              </div>
-
-            </div>
-
-
-            <!-- PAGAMENTO -->
-
-            <div class="checkout-block">
-
-              <div class="checkout-block-heading">
-
-                <span>04</span>
-
-                <div>
-                  <h2>
-                    PAGAMENTO
-                  </h2>
-
-                  <p>
-                    Escolha como deseja pagar.
-                  </p>
-
-                </div>
-
-              </div>
-
-
-              <div class="payment-options">
-
-                <label class="payment-option">
-
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="pix"
-                    checked
-                  >
-
-                  <span>
-
-                    <strong>
-                      PIX
-                    </strong>
-
-                    <small>
-                      Aprovação rápida
-                    </small>
-
-                  </span>
-
-                </label>
-
-
-                <label class="payment-option">
-
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="card"
-                  >
-
-                  <span>
-
-                    <strong>
-                      CARTÃO
-                    </strong>
-
-                    <small>
-                      Crédito ou débito
-                    </small>
-
-                  </span>
-
-                </label>
-
-              </div>
-
-            </div>
-
-
-            <!-- MENSAGEM -->
-
-            <div
-              id="checkoutMessage"
-              class="auth-message"
-              style="display:none;"
-            ></div>
-
-
-            <button
-              type="submit"
-              class="button button-black checkout-submit"
-            >
-              CONTINUAR PARA PAGAMENTO →
-            </button>
-
-          </form>
 
         </section>
 
-
-        <!-- =================================================
-             RESUMO
-             ================================================= -->
-
         <aside class="checkout-summary">
 
-          <div class="checkout-summary-header">
+            <div class="summary-title">Seu pedido</div>
 
-            <span class="section-label">
-              SEU PEDIDO
-            </span>
+            <div id="checkoutItems"></div>
 
-            <h2>
-              RESUMO
-            </h2>
-
-          </div>
-
-
-          <div
-            id="checkoutItems"
-            class="checkout-items"
-          ></div>
-
-
-          <div class="checkout-totals">
-
-            <div>
-
-              <span>
-                SUBTOTAL
-              </span>
-
-              <strong id="checkoutSubtotal">
-                R$ 0,00
-              </strong>
-
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <strong id="checkoutSubtotal">R$ 0,00</strong>
             </div>
 
-
-            <div>
-
-              <span>
-                FRETE
-              </span>
-
-              <strong id="checkoutShipping">
-                R$ 19,90
-              </strong>
-
+            <div class="summary-line">
+                <span>Entrega</span>
+                <strong id="checkoutShipping">A calcular</strong>
             </div>
 
-
-            <div class="checkout-total">
-
-              <span>
-                TOTAL
-              </span>
-
-              <strong id="checkoutTotal">
-                R$ 0,00
-              </strong>
-
+            <div class="summary-total">
+                <span>Total</span>
+                <span id="checkoutTotal">R$ 0,00</span>
             </div>
 
-          </div>
+            <button
+                type="button"
+                id="finishOrderButton"
+                class="checkout-button"
+            >
+                FINALIZAR PEDIDO
+            </button>
 
-
-          <a
-            href="index.html#produtos"
-            class="checkout-continue"
-          >
-            ← CONTINUAR COMPRANDO
-          </a>
+            <div id="checkoutMessage" class="checkout-message"></div>
 
         </aside>
 
-      </div>
-
     </div>
 
-  </main>
+</main>
 
-
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
-
-  <footer>
-
-    <div class="footer-bottom">
-
-      <span>
-        © 2026 NOME.
-      </span>
-
-      <span>
-        TODOS OS DIREITOS RESERVADOS.
-      </span>
-
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img src="logo.svg" alt="GUIP">
+            <p>Streetwear para quem não segue padrão.</p>
+        </div>
     </div>
+</footer>
 
-  </footer>
-
-
-  <!-- =====================================================
-       SCRIPTS
-       ===================================================== -->
-
-  <script src="produtos.js"></script>
-  <script src="carrinho.js"></script>
-  <script src="auth.js"></script>
-  <script src="checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="produtos.js"></script>
+<script src="carrinho.js"></script>
+<script src="checkout.js"></script>
 
 </body>
 </html>
