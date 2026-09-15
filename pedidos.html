@@ -1,600 +1,165 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="description"
-    content="Meus pedidos — NOME Streetwear"
-  >
+    <title>Meus Pedidos | GUIP</title>
 
-  <title>Meus pedidos — NOME</title>
+    <link rel="stylesheet" href="style.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        .orders-page {
+            max-width: 1100px;
+            margin: auto;
+            padding: 70px 24px 120px;
+        }
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+        .orders-title {
+            font-size: clamp(45px, 8vw, 80px);
+            line-height: .9;
+            letter-spacing: -.06em;
+            margin-bottom: 60px;
+        }
 
-  <link rel="stylesheet" href="style.css">
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .order-card {
+            border: 1px solid #ddd;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .order-id {
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .order-date {
+            color: #777;
+            font-size: 13px;
+            margin-top: 7px;
+        }
+
+        .order-total {
+            font-weight: 700;
+        }
+
+        .order-status {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            background: #eee;
+        }
+
+        .order-link {
+            display: inline-block;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 18px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .empty-orders {
+            padding: 70px 20px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        .empty-orders h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .empty-orders p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .shop-link {
+            display: inline-block;
+            background: #111;
+            color: #fff;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media(max-width:700px) {
+            .order-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .order-actions {
+                width: 100%;
+            }
+
+            .order-link {
+                display: block;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
-<body class="account-page">
+<body>
 
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
+<header class="site-header">
+    <div class="header-inner">
 
-  <header class="header">
+        <a href="index.html" class="brand-logo">
+            <img src="logo.svg" alt="GUIP">
+        </a>
 
-    <a href="index.html" class="brand">
-      NOME<span>.</span>
-    </a>
+        <nav class="main-nav">
+            <a href="index.html#drop">DROP</a>
+            <a href="index.html#shop">SHOP</a>
+            <a href="sobre.html">A MARCA</a>
+        </nav>
 
-    <nav class="desktop-nav">
-      <a href="index.html#drop">DROP 01</a>
-      <a href="index.html#produtos">PRODUTOS</a>
-      <a href="index.html#marca">A MARCA</a>
-    </nav>
-
-    <div class="header-actions">
-
-      <a href="conta.html" class="account-link">
-        Minha conta
-      </a>
-
-      <button
-        class="cart-button"
-        type="button"
-        onclick="openCart()"
-      >
-        Sacola
-        <span id="cartCount">0</span>
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <!-- =====================================================
-       CONTEÚDO
-       ===================================================== -->
-
-  <main class="account-main">
-
-    <div class="account-container">
-
-      <!-- CABEÇALHO -->
-
-      <section class="account-welcome">
-
-        <div>
-
-          <span class="section-label">
-            MINHA CONTA
-          </span>
-
-          <h1>
-            MEUS<br>
-            <em>PEDIDOS.</em>
-          </h1>
-
-          <p>
-            Aqui você encontra o histórico das suas compras.
-          </p>
-
+        <div class="header-actions">
+            <a href="conta.html">Conta</a>
+            <a href="index.html">Shop</a>
         </div>
 
-        <a
-          href="conta.html"
-          class="account-logout"
-          style="text-decoration:none;"
-        >
-          ← VOLTAR PARA CONTA
-        </a>
+    </div>
+</header>
 
-      </section>
+<main class="orders-page">
 
+    <h1 class="orders-title">MEUS PEDIDOS</h1>
 
-      <!-- =================================================
-           LISTA DE PEDIDOS
-           ================================================= -->
-
-      <section class="orders-section">
-
-        <div
-          id="ordersContainer"
-          class="orders-container"
-        ></div>
-
-      </section>
-
-
-      <!-- =================================================
-           ESTADO VAZIO
-           ================================================= -->
-
-      <section
-        id="emptyOrders"
-        class="empty-orders"
-        style="display:none;"
-      >
-
-        <span class="section-label">
-          HISTÓRICO
-        </span>
-
-        <h2>
-          VOCÊ AINDA<br>
-          NÃO FEZ <em>NENHUM PEDIDO.</em>
-        </h2>
-
-        <p>
-          Quando você realizar uma compra, ela aparecerá aqui.
-        </p>
-
-        <a
-          href="index.html#produtos"
-          class="button button-black"
-        >
-          EXPLORAR PRODUTOS
-        </a>
-
-      </section>
-
+    <div id="ordersContainer">
+        <p>Carregando pedidos...</p>
     </div>
 
-  </main>
+</main>
 
-
-  <!-- =====================================================
-       CARRINHO
-       ===================================================== -->
-
-  <aside
-    class="cart-drawer"
-    id="cartDrawer"
-  >
-
-    <div class="cart-header">
-
-      <div>
-
-        <span>SUA</span>
-
-        <h2>SACOLA</h2>
-
-      </div>
-
-      <button
-        onclick="closeCart()"
-        class="cart-close"
-      >
-        ×
-      </button>
-
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img src="logo.svg" alt="GUIP">
+            <p>Streetwear para quem não segue padrão.</p>
+        </div>
     </div>
-
-
-    <div
-      class="cart-content"
-      id="cartItems"
-    ></div>
-
-
-    <div class="cart-footer">
-
-      <div class="cart-total-row">
-
-        <span>SUBTOTAL</span>
-
-        <strong id="cartTotal">
-          R$ 0,00
-        </strong>
-
-      </div>
-
-      <p class="cart-shipping">
-        Frete calculado no checkout.
-      </p>
-
-      <a
-        href="checkout.html"
-        class="button button-black cart-checkout"
-      >
-        FINALIZAR COMPRA
-      </a>
-
-    </div>
-
-  </aside>
-
-
-  <div
-    class="cart-overlay"
-    id="cartOverlay"
-    onclick="closeCart()"
-  ></div>
-
-
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
-
-  <footer>
-
-    <div class="footer-bottom">
-
-      <span>
-        © 2026 NOME.
-      </span>
-
-      <span>
-        TODOS OS DIREITOS RESERVADOS.
-      </span>
-
-    </div>
-
-  </footer>
-
-
-  <!-- =====================================================
-       SCRIPTS
-       ===================================================== -->
-
-  <script src="produtos.js"></script>
-  <script src="carrinho.js"></script>
-  <script src="auth.js"></script>
-
-
-  <!-- =====================================================
-       SISTEMA DE PEDIDOS
-       ===================================================== -->
-
-  <script>
-
-    const ORDERS_KEY = "nome_streetwear_orders";
-
-
-    function getOrders() {
-
-      try {
-
-        const saved =
-          localStorage.getItem(ORDERS_KEY);
-
-        if (!saved) {
-          return [];
-        }
-
-        return JSON.parse(saved);
-
-      } catch (error) {
-
-        console.error(
-          "Erro ao carregar pedidos:",
-          error
-        );
-
-        return [];
-
-      }
-
-    }
-
-
-    function formatOrderPrice(value) {
-
-      return Number(value).toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL"
-        }
-      );
-
-    }
-
-
-    function escapeOrderHTML(value) {
-
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    function formatOrderDate(date) {
-
-      const parsedDate =
-        new Date(date);
-
-      if (Number.isNaN(parsedDate.getTime())) {
-        return "Data não disponível";
-      }
-
-      return parsedDate.toLocaleDateString(
-        "pt-BR",
-        {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric"
-        }
-      );
-
-    }
-
-
-    function getStatusLabel(status) {
-
-      const statuses = {
-
-        pending: "AGUARDANDO PAGAMENTO",
-
-        paid: "PAGAMENTO APROVADO",
-
-        processing: "EM PREPARAÇÃO",
-
-        shipped: "ENVIADO",
-
-        delivered: "ENTREGUE",
-
-        cancelled: "CANCELADO"
-
-      };
-
-      return statuses[status] || "PROCESSANDO";
-
-    }
-
-
-    function renderOrders() {
-
-      const container =
-        document.getElementById(
-          "ordersContainer"
-        );
-
-      const empty =
-        document.getElementById(
-          "emptyOrders"
-        );
-
-      if (!container || !empty) {
-        return;
-      }
-
-
-      const user =
-        getCurrentUser();
-
-      if (!user) {
-        return;
-      }
-
-
-      let orders =
-        getOrders();
-
-
-      /*
-        Mostra apenas os pedidos
-        pertencentes ao usuário logado.
-      */
-
-      orders = orders.filter(
-        order =>
-          order.userId === user.id ||
-          order.email === user.email
-      );
-
-
-      if (orders.length === 0) {
-
-        container.innerHTML = "";
-
-        empty.style.display = "flex";
-
-        return;
-
-      }
-
-
-      empty.style.display = "none";
-
-
-      /*
-        Mais recentes primeiro.
-      */
-
-      orders.sort(
-        (a, b) =>
-          new Date(b.createdAt) -
-          new Date(a.createdAt)
-      );
-
-
-      container.innerHTML =
-        orders.map(order => {
-
-          const items =
-            Array.isArray(order.items)
-              ? order.items
-              : [];
-
-
-          const itemsHTML =
-            items.map(item => `
-
-              <div class="order-item">
-
-                <div class="order-item-image">
-                  <span>
-                    ${String(item.id).padStart(2, "0")}
-                  </span>
-                </div>
-
-                <div class="order-item-info">
-
-                  <strong>
-                    ${escapeOrderHTML(item.name)}
-                  </strong>
-
-                  <span>
-                    Tamanho:
-                    ${escapeOrderHTML(item.size)}
-                  </span>
-
-                  <span>
-                    Quantidade:
-                    ${item.quantity}
-                  </span>
-
-                </div>
-
-                <strong class="order-item-price">
-                  ${formatOrderPrice(
-                    item.price * item.quantity
-                  )}
-                </strong>
-
-              </div>
-
-            `).join("");
-
-
-          return `
-
-            <article class="order-card">
-
-              <div class="order-card-header">
-
-                <div>
-
-                  <span class="section-label">
-                    PEDIDO
-                  </span>
-
-                  <h2>
-                    #${escapeOrderHTML(
-                      order.id || "000000"
-                    )}
-                  </h2>
-
-                </div>
-
-
-                <div class="order-status">
-
-                  <span>
-                    ${getStatusLabel(
-                      order.status
-                    )}
-                  </span>
-
-                </div>
-
-              </div>
-
-
-              <div class="order-meta">
-
-                <span>
-                  DATA
-                  <strong>
-                    ${formatOrderDate(
-                      order.createdAt
-                    )}
-                  </strong>
-                </span>
-
-                <span>
-                  ITENS
-                  <strong>
-                    ${items.reduce(
-                      (total, item) =>
-                        total +
-                        Number(item.quantity || 0),
-                      0
-                    )}
-                  </strong>
-                </span>
-
-                <span>
-                  TOTAL
-                  <strong>
-                    ${formatOrderPrice(
-                      order.total || 0
-                    )}
-                  </strong>
-                </span>
-
-              </div>
-
-
-              <div class="order-items">
-
-                ${itemsHTML}
-
-              </div>
-
-
-              <div class="order-card-footer">
-
-                <span>
-                  ${
-                    order.status === "delivered"
-                      ? "Pedido entregue."
-                      : "Acompanhe o status do seu pedido."
-                  }
-                </span>
-
-              </div>
-
-            </article>
-
-          `;
-
-        }).join("");
-
-    }
-
-
-    /* =====================================================
-       INICIALIZAÇÃO
-       ===================================================== */
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      () => {
-
-        const user =
-          requireLogin();
-
-        if (!user) {
-          return;
-        }
-
-        updateAuthUI();
-
-        updateCart();
-
-        loadAccountData();
-
-        renderOrders();
-
-      }
-    );
-
-  </script>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="pedidos.js"></script>
 
 </body>
 </html>
