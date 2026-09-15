@@ -1,824 +1,313 @@
-// =========================================================
-// NOME STREETWEAR — CHECKOUT
-// =========================================================
-
-const ORDERS_STORAGE_KEY = "nome_streetwear_orders";
-
-let checkoutCart = [];
-let checkoutSubtotal = 0;
-let checkoutShipping = 19.90;
-
-
-// =========================================================
-// FORMATAÇÃO
-// =========================================================
+let checkoutUser = null;
 
 function checkoutFormatPrice(value) {
-  return Number(value).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  });
+    return Number(value || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
 }
 
-
-// =========================================================
-// CARREGAR USUÁRIO
-// =========================================================
-
-function loadCheckoutUser() {
-  const session = localStorage.getItem("nome_streetwear_session");
-
-  if (!session) {
-    window.location.href = "login.html?redirect=checkout.html";
-    return null;
-  }
-
-  try {
-    return JSON.parse(session);
-  } catch (error) {
-    localStorage.removeItem("nome_streetwear_session");
-    window.location.href = "login.html?redirect=checkout.html";
-    return null;
-  }
-}
-
-
-// =========================================================
-// CARREGAR CARRINHO
-// =========================================================
-
-function loadCheckoutCart() {
-  try {
-    const savedCart = localStorage.getItem("nome_streetwear_cart");
-
-    checkoutCart = savedCart
-      ? JSON.parse(savedCart)
-      : [];
-
-    if (!Array.isArray(checkoutCart)) {
-      checkoutCart = [];
+function getCheckoutCart() {
+    try {
+        return JSON.parse(localStorage.getItem("guip_cart") || "[]");
+    } catch {
+        return [];
     }
-  } catch (error) {
-    checkoutCart = [];
-  }
-
-  calculateCheckoutSubtotal();
 }
 
-
-// =========================================================
-// CALCULAR SUBTOTAL
-// =========================================================
-
-function calculateCheckoutSubtotal() {
-  checkoutSubtotal = checkoutCart.reduce((total, item) => {
-    const price = Number(item.price) || 0;
-    const quantity = Number(item.quantity) || 1;
-
-    return total + price * quantity;
-  }, 0);
+function calculateCheckoutTotal() {
+    return getCheckoutCart().reduce((total, item) => {
+        return total + (Number(item.price) * Number(item.quantity || 1));
+    }, 0);
 }
 
+function showCheckoutMessage(message) {
+    const box = document.getElementById("checkoutMessage");
 
-// =========================================================
-// RENDERIZAR PRODUTOS
-// =========================================================
+    if (!box) return;
 
-function renderCheckoutItems() {
-  const container = document.getElementById("checkoutItems");
+    box.textContent = message;
+    box.classList.add("show");
+}
 
-  if (!container) return;
+function renderCheckout() {
+    const container = document.getElementById("checkoutItems");
 
-  if (checkoutCart.length === 0) {
+    if (!container) return;
 
-    container.innerHTML = `
-      <div class="checkout-empty">
-        <strong>SUA SACOLA ESTÁ VAZIA.</strong>
+    const cart = getCheckoutCart();
 
-        <p>
-          Adicione produtos antes de continuar.
-        </p>
+    if (!cart.length) {
+        container.innerHTML = `
+            <p style="color:#666;">
+                Seu carrinho está vazio.
+            </p>
+        `;
 
-        <a
-          href="index.html#produtos"
-          class="button button-black"
-        >
-          IR PARA A LOJA
-        </a>
-      </div>
-    `;
+        const button = document.getElementById("finishOrderButton");
 
-    const submitButton =
-      document.querySelector(".checkout-submit");
+        if (button) {
+            button.disabled = true;
+        }
 
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.style.opacity = "0.5";
-      submitButton.style.cursor = "not-allowed";
+        return;
     }
 
-    return;
-  }
+    container.innerHTML = cart.map(item => {
 
-  container.innerHTML = checkoutCart.map(item => {
+        const image =
+            item.image_url ||
+            item.image ||
+            "https://placehold.co/150x180/f5f5f5/111111?text=GUIP";
 
-    const subtotal =
-      (Number(item.price) || 0) *
-      (Number(item.quantity) || 1);
+        return `
+            <div class="summary-item">
 
-    return `
-      <div class="checkout-item">
+                <img
+                    src="${image}"
+                    alt="${item.name || "Produto GUIP"}"
+                >
 
-        <div class="checkout-item-image">
-          <span>
-            ${String(item.id || "").padStart(2, "0")}
-          </span>
-        </div>
+                <div>
+                    <div class="summary-item-name">
+                        ${item.name || "Produto"}
+                    </div>
 
-        <div class="checkout-item-info">
+                    <div class="summary-item-meta">
+                        ${item.size ? `Tamanho: ${item.size}<br>` : ""}
+                        Quantidade: ${item.quantity || 1}
+                    </div>
+                </div>
 
-          <strong>
-            ${escapeCheckoutHTML(item.name || "Produto")}
-          </strong>
+                <div class="summary-item-price">
+                    ${checkoutFormatPrice(
+                        Number(item.price) * Number(item.quantity || 1)
+                    )}
+                </div>
 
-          <small>
-            Tamanho: ${escapeCheckoutHTML(item.size || "Único")}
-          </small>
+            </div>
+        `;
+    }).join("");
 
-          <small>
-            Quantidade: ${Number(item.quantity) || 1}
-          </small>
+    const total = calculateCheckoutTotal();
 
-        </div>
+    document.getElementById("checkoutSubtotal").textContent =
+        checkoutFormatPrice(total);
 
-        <strong class="checkout-item-price">
-          ${checkoutFormatPrice(subtotal)}
-        </strong>
+    document.getElementById("checkoutTotal").textContent =
+        checkoutFormatPrice(total);
 
-      </div>
-    `;
-
-  }).join("");
+    document.getElementById("checkoutShipping").textContent =
+        "A calcular";
 }
 
+async function loadCheckoutUser() {
 
-// =========================================================
-// ATUALIZAR TOTAIS
-// =========================================================
+    if (typeof getCurrentUser !== "function") {
+        window.location.href = "login.html";
+        return;
+    }
 
-function updateCheckoutTotals() {
+    checkoutUser = await getCurrentUser();
 
-  calculateCheckoutSubtotal();
+    if (!checkoutUser) {
+        window.location.href = "login.html?redirect=checkout.html";
+        return;
+    }
 
-  const shippingElement =
-    document.getElementById("checkoutShipping");
+    const email = document.getElementById("email");
 
-  const subtotalElement =
-    document.getElementById("checkoutSubtotal");
+    if (email) {
+        email.value = checkoutUser.email || "";
+    }
 
-  const totalElement =
-    document.getElementById("checkoutTotal");
+    if (typeof getProfile === "function") {
 
+        try {
 
-  // Frete grátis acima de R$ 299
-  // Apenas quando o usuário selecionar a opção grátis.
+            const profile = await getProfile(checkoutUser.id);
 
-  const selectedShipping =
-    document.querySelector(
-      'input[name="shipping"]:checked'
-    );
+            if (profile) {
 
-  if (selectedShipping) {
+                const name = document.getElementById("fullName");
 
-    const selectedValue =
-      selectedShipping.value;
+                if (name && profile.full_name) {
+                    name.value = profile.full_name;
+                }
 
-    const selectedPrice =
-      Number(selectedShipping.dataset.price) || 0;
+            }
+
+        } catch (error) {
+            console.log("Perfil não carregado:", error);
+        }
+    }
+}
+
+async function createAddress(address) {
+
+    const { data, error } = await db
+        .from("addresses")
+        .insert({
+            user_id: checkoutUser.id,
+            name: address.fullName,
+            phone: address.phone,
+            cep: address.cep,
+            state: address.state,
+            city: address.city,
+            street: address.street,
+            number: address.number,
+            complement: address.complement || null,
+            neighborhood: address.neighborhood
+        })
+        .select()
+        .single();
+
+    if (error) {
+        console.warn("Não foi possível salvar endereço:", error);
+        return null;
+    }
+
+    return data;
+}
+
+async function createOrder() {
+
+    if (!checkoutUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const cart = getCheckoutCart();
+
+    if (!cart.length) {
+        showCheckoutMessage("Seu carrinho está vazio.");
+        return;
+    }
+
+    const fullName = document.getElementById("fullName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const cep = document.getElementById("cep").value.trim();
+    const state = document.getElementById("state").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const street = document.getElementById("street").value.trim();
+    const number = document.getElementById("number").value.trim();
+    const complement = document.getElementById("complement").value.trim();
+    const neighborhood = document.getElementById("neighborhood").value.trim();
 
     if (
-      selectedValue === "free" &&
-      checkoutSubtotal < 299
+        !fullName ||
+        !phone ||
+        !cep ||
+        !state ||
+        !city ||
+        !street ||
+        !number ||
+        !neighborhood
     ) {
-
-      checkoutShipping = 19.90;
-
-      showCheckoutMessage(
-        "O frete grátis está disponível para pedidos acima de R$ 299.",
-        "error"
-      );
-
-      const standard =
-        document.querySelector(
-          'input[name="shipping"][value="standard"]'
+        showCheckoutMessage(
+            "Preencha todos os campos obrigatórios."
         );
-
-      if (standard) {
-        standard.checked = true;
-      }
-
-    } else {
-
-      checkoutShipping = selectedPrice;
-
-    }
-  }
-
-
-  const total =
-    checkoutSubtotal + checkoutShipping;
-
-
-  if (subtotalElement) {
-    subtotalElement.textContent =
-      checkoutFormatPrice(checkoutSubtotal);
-  }
-
-
-  if (shippingElement) {
-
-    shippingElement.textContent =
-      checkoutShipping === 0
-        ? "GRÁTIS"
-        : checkoutFormatPrice(checkoutShipping);
-
-  }
-
-
-  if (totalElement) {
-    totalElement.textContent =
-      checkoutFormatPrice(total);
-  }
-
-}
-
-
-// =========================================================
-// FRETE
-// =========================================================
-
-function setupShipping() {
-
-  const options =
-    document.querySelectorAll(
-      'input[name="shipping"]'
-    );
-
-  options.forEach(option => {
-
-    option.addEventListener("change", () => {
-
-      clearCheckoutMessage();
-
-      updateCheckoutTotals();
-
-    });
-
-  });
-
-}
-
-
-// =========================================================
-// MÁSCARA CEP
-// =========================================================
-
-function setupCepMask() {
-
-  const cep =
-    document.getElementById("checkoutCep");
-
-  if (!cep) return;
-
-  cep.addEventListener("input", event => {
-
-    let value =
-      event.target.value.replace(/\D/g, "");
-
-    if (value.length > 8) {
-      value = value.substring(0, 8);
+        return;
     }
 
-    if (value.length > 5) {
-
-      value =
-        value.substring(0, 5) +
-        "-" +
-        value.substring(5);
-
-    }
-
-    event.target.value = value;
-
-  });
-
-}
-
-
-// =========================================================
-// MÁSCARA TELEFONE
-// =========================================================
-
-function setupPhoneMask() {
-
-  const phone =
-    document.getElementById("checkoutPhone");
-
-  if (!phone) return;
-
-  phone.addEventListener("input", event => {
-
-    let value =
-      event.target.value.replace(/\D/g, "");
-
-    if (value.length > 11) {
-      value = value.substring(0, 11);
-    }
-
-    if (value.length <= 10) {
-
-      value = value.replace(
-        /^(\d{2})(\d)/,
-        "($1) $2"
-      );
-
-      value = value.replace(
-        /(\d{4})(\d)/,
-        "$1-$2"
-      );
-
-    } else {
-
-      value = value.replace(
-        /^(\d{2})(\d)/,
-        "($1) $2"
-      );
-
-      value = value.replace(
-        /(\d{5})(\d)/,
-        "$1-$2"
-      );
-
-    }
-
-    event.target.value = value;
-
-  });
-
-}
-
-
-// =========================================================
-// PREENCHER DADOS DO USUÁRIO
-// =========================================================
-
-function fillCheckoutUser(user) {
-
-  if (!user) return;
-
-  const name =
-    document.getElementById("checkoutName");
-
-  const email =
-    document.getElementById("checkoutEmail");
-
-
-  if (name && user.name) {
-    name.value = user.name;
-  }
-
-
-  if (email && user.email) {
-    email.value = user.email;
-  }
-
-}
-
-
-// =========================================================
-// VALIDAR CHECKOUT
-// =========================================================
-
-function validateCheckout() {
-
-  if (checkoutCart.length === 0) {
-
-    showCheckoutMessage(
-      "Sua sacola está vazia.",
-      "error"
-    );
-
-    return false;
-  }
-
-
-  const form =
-    document.getElementById("checkoutForm");
-
-  if (!form) return false;
-
-
-  if (!form.checkValidity()) {
-
-    form.reportValidity();
-
-    showCheckoutMessage(
-      "Confira os dados preenchidos antes de continuar.",
-      "error"
-    );
-
-    return false;
-  }
-
-
-  const selectedShipping =
-    document.querySelector(
-      'input[name="shipping"]:checked'
-    );
-
-
-  if (!selectedShipping) {
-
-    showCheckoutMessage(
-      "Selecione uma opção de envio.",
-      "error"
-    );
-
-    return false;
-  }
-
-
-  if (
-    selectedShipping.value === "free" &&
-    checkoutSubtotal < 299
-  ) {
-
-    showCheckoutMessage(
-      "O frete grátis está disponível apenas para pedidos acima de R$ 299.",
-      "error"
-    );
-
-    return false;
-  }
-
-
-  const payment =
-    document.querySelector(
-      'input[name="payment"]:checked'
-    );
-
-
-  if (!payment) {
-
-    showCheckoutMessage(
-      "Selecione uma forma de pagamento.",
-      "error"
-    );
-
-    return false;
-  }
-
-
-  return true;
-}
-
-
-// =========================================================
-// CRIAR PEDIDO
-// =========================================================
-
-function createOrder(user) {
-
-  const orders =
-    JSON.parse(
-      localStorage.getItem(ORDERS_STORAGE_KEY) || "[]"
-    );
-
-
-  const selectedShipping =
-    document.querySelector(
-      'input[name="shipping"]:checked'
-    );
-
-
-  const selectedPayment =
-    document.querySelector(
-      'input[name="payment"]:checked'
-    );
-
-
-  const name =
-    document.getElementById("checkoutName").value.trim();
-
-  const email =
-    document.getElementById("checkoutEmail").value.trim();
-
-  const phone =
-    document.getElementById("checkoutPhone").value.trim();
-
-  const cep =
-    document.getElementById("checkoutCep").value.trim();
-
-  const address =
-    document.getElementById("checkoutAddress").value.trim();
-
-  const number =
-    document.getElementById("checkoutNumber").value.trim();
-
-  const complement =
-    document.getElementById("checkoutComplement").value.trim();
-
-  const neighborhood =
-    document.getElementById("checkoutNeighborhood").value.trim();
-
-  const city =
-    document.getElementById("checkoutCity").value.trim();
-
-  const state =
-    document.getElementById("checkoutState").value;
-
-
-  const orderId =
-    "NOME-" +
-    Date.now().toString().slice(-8);
-
-
-  const shippingPrice =
-    Number(selectedShipping.dataset.price) || 0;
-
-
-  const total =
-    checkoutSubtotal + shippingPrice;
-
-
-  const order = {
-
-    id: orderId,
-
-    userId:
-      user.id ||
-      user.email,
-
-    email,
-
-    customerName: name,
-
-    phone,
-
-    date:
-      new Date().toISOString(),
-
-    status:
-      "Aguardando pagamento",
-
-    payment:
-      selectedPayment.value,
-
-    shipping: {
-
-      method:
-        selectedShipping.value,
-
-      price:
-        shippingPrice,
-
-      cep,
-
-      address,
-
-      number,
-
-      complement,
-
-      neighborhood,
-
-      city,
-
-      state
-
-    },
-
-    items:
-      checkoutCart.map(item => ({
-
-        id:
-          item.id,
-
-        name:
-          item.name,
-
-        price:
-          Number(item.price) || 0,
-
-        size:
-          item.size || "Único",
-
-        quantity:
-          Number(item.quantity) || 1
-
-      })),
-
-    subtotal:
-      checkoutSubtotal,
-
-    shippingPrice,
-
-    total
-
-  };
-
-
-  orders.push(order);
-
-
-  localStorage.setItem(
-    ORDERS_STORAGE_KEY,
-    JSON.stringify(orders)
-  );
-
-
-  return order;
-}
-
-
-// =========================================================
-// FINALIZAR PEDIDO
-// =========================================================
-
-function finishOrder(event) {
-
-  event.preventDefault();
-
-  clearCheckoutMessage();
-
-
-  const user =
-    loadCheckoutUser();
-
-  if (!user) return;
-
-
-  if (!validateCheckout()) {
-    return;
-  }
-
-
-  const button =
-    document.querySelector(".checkout-submit");
-
-
-  if (button) {
+    const button = document.getElementById("finishOrderButton");
 
     button.disabled = true;
+    button.textContent = "PROCESSANDO...";
 
-    button.textContent =
-      "PROCESSANDO...";
+    try {
 
-  }
+        const total = calculateCheckoutTotal();
 
+        const addressObject = {
+            fullName,
+            phone,
+            cep,
+            state,
+            city,
+            street,
+            number,
+            complement,
+            neighborhood
+        };
 
-  try {
+        const address = await createAddress(addressObject);
 
-    const order =
-      createOrder(user);
+        const orderPayload = {
+            user_id: checkoutUser.id,
+            status: "pending",
+            total: total,
+            payment_method: "pix"
+        };
 
+        if (address?.id) {
+            orderPayload.address_id = address.id;
+        }
 
-    /*
-     * Neste momento o pedido é salvo localmente.
-     *
-     * O pagamento real será conectado posteriormente
-     * através de um gateway/backend.
-     */
+        const { data: order, error: orderError } = await db
+            .from("orders")
+            .insert(orderPayload)
+            .select()
+            .single();
 
+        if (orderError) {
+            throw orderError;
+        }
 
-    localStorage.removeItem(
-      "nome_streetwear_cart"
-    );
+        const orderItems = cart.map(item => ({
+            order_id: order.id,
+            product_id: item.id,
+            product_name: item.name,
+            quantity: Number(item.quantity || 1),
+            price: Number(item.price),
+            size: item.size || null
+        }));
 
+        const { error: itemsError } = await db
+            .from("order_items")
+            .insert(orderItems);
 
-    setTimeout(() => {
+        if (itemsError) {
+            throw itemsError;
+        }
 
-      window.location.href =
-        "pedido.html?id=" +
-        encodeURIComponent(order.id);
+        localStorage.removeItem("guip_cart");
 
-    }, 500);
+        window.location.href =
+            `pedido.html?id=${encodeURIComponent(order.id)}`;
 
+    } catch (error) {
 
-  } catch (error) {
+        console.error("Erro ao criar pedido:", error);
 
-    console.error(
-      "Erro ao criar pedido:",
-      error
-    );
+        showCheckoutMessage(
+            "Não foi possível finalizar o pedido agora. Verifique os dados e tente novamente."
+        );
 
+        button.disabled = false;
+        button.textContent = "FINALIZAR PEDIDO";
+    }
+}
 
-    showCheckoutMessage(
-      "Não foi possível criar o pedido. Tente novamente.",
-      "error"
-    );
+document.addEventListener("DOMContentLoaded", async () => {
 
+    renderCheckout();
 
-    if (button) {
+    await loadCheckoutUser();
 
-      button.disabled = false;
+    const form = document.getElementById("checkoutForm");
 
-      button.textContent =
-        "CONTINUAR PARA PAGAMENTO →";
-
+    if (form) {
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+            createOrder();
+        });
     }
 
-  }
+    const button = document.getElementById("finishOrderButton");
 
-}
+    if (button) {
+        button.addEventListener("click", createOrder);
+    }
 
-
-// =========================================================
-// MENSAGENS
-// =========================================================
-
-function showCheckoutMessage(
-  message,
-  type = "error"
-) {
-
-  const element =
-    document.getElementById("checkoutMessage");
-
-  if (!element) return;
-
-
-  element.textContent = message;
-
-  element.className =
-    "auth-message " +
-    type;
-
-  element.style.display =
-    "block";
-
-}
-
-
-function clearCheckoutMessage() {
-
-  const element =
-    document.getElementById("checkoutMessage");
-
-  if (!element) return;
-
-
-  element.textContent = "";
-
-  element.style.display =
-    "none";
-
-}
-
-
-// =========================================================
-// ESCAPAR HTML
-// =========================================================
-
-function escapeCheckoutHTML(value) {
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-// =========================================================
-// INICIALIZAÇÃO
-// =========================================================
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    const user =
-      loadCheckoutUser();
-
-    if (!user) return;
-
-
-    loadCheckoutCart();
-
-    fillCheckoutUser(user);
-
-    renderCheckoutItems();
-
-    setupShipping();
-
-    setupCepMask();
-
-    setupPhoneMask();
-
-    updateCheckoutTotals();
-
-  }
-);
+});
