@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Produto — GUIP</title>
+    <meta name="description" content="Produto GUIP. Streetwear para quem não segue padrão.">
+
+    <link rel="icon" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <button class="mobile-menu-button" onclick="toggleMobileMenu()" aria-label="Menu">
+            ☰
+        </button>
+
+        <a href="index.html" class="brand">
+            <img src="logo.svg" alt="GUIP">
+        </a>
+
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html">DROP</a>
+            <a href="index.html#shop">SHOP</a>
+            <a href="sobre.html">A MARCA</a>
+        </nav>
+
+        <div class="header-actions">
+
+            <button onclick="openSearch()" aria-label="Buscar">
+                Buscar
+            </button>
+
+            <a href="conta.html" aria-label="Conta">
+                Conta
+            </a>
+
+            <button onclick="openCart()" aria-label="Carrinho">
+                Carrinho
+                <span id="cartCount">0</span>
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="product-page">
+
+        <div class="product-page-image">
+
+            <div class="product-image-box">
+
+                <img
+                    id="productImage"
+                    src=""
+                    alt="Produto GUIP"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="product-page-info">
+
+            <span id="productTag" class="product-tag"></span>
+
+            <span id="productCategory" class="product-category"></span>
+
+            <h1 id="productName">Carregando...</h1>
+
+            <div id="productPrice" class="product-price"></div>
+
+            <p id="productDescription" class="product-description"></p>
+
+            <div class="product-divider"></div>
+
+            <div class="size-title">
+                <strong>Tamanho</strong>
+            </div>
+
+            <div id="productSizes" class="size-options"></div>
+
+            <p id="sizeError" class="form-error"></p>
+
+            <p id="productStock" class="product-stock"></p>
+
+            <button
+                id="addProduct"
+                class="primary-button product-add-button"
+            >
+                ADICIONAR AO CARRINHO
+            </button>
+
+            <div class="product-info-block">
+
+                <div>
+                    <strong>Envio</strong>
+                    <p>Enviamos para todo o Brasil.</p>
+                </div>
+
+                <div>
+                    <strong>Trocas</strong>
+                    <p>Consulte nossa política de trocas.</p>
+                </div>
+
+                <div>
+                    <strong>Pagamento</strong>
+                    <p>Pagamento seguro através do checkout.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="site-footer">
+
+    <div class="footer-inner">
+
+        <div>
+            <img src="logo.svg" class="footer-logo" alt="GUIP">
+            <p>FEITO PRA QUEM NÃO SEGUE PADRÃO.</p>
+        </div>
+
+        <div>
+            <h4>GUIP</h4>
+            <a href="sobre.html">A Marca</a>
+            <a href="index.html">Shop</a>
+        </div>
+
+        <div>
+            <h4>Ajuda</h4>
+            <a href="envio.html">Envio</a>
+            <a href="trocas.html">Trocas</a>
+            <a href="termos.html">Termos</a>
+            <a href="privacidade.html">Privacidade</a>
+        </div>
+
+        <div>
+            <h4>Conta</h4>
+            <a href="login.html">Entrar</a>
+            <a href="cadastro.html">Criar conta</a>
+            <a href="pedidos.html">Pedidos</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 GUIP. Todos os direitos reservados.
+    </div>
+
+</footer>
+
+
+<!-- CARRINHO -->
+
+<div id="cartOverlay" class="cart-overlay" onclick="closeCart()"></div>
+
+<aside id="cartDrawer" class="cart-drawer">
+
+    <div class="cart-header">
+
+        <h2>Seu carrinho</h2>
+
+        <button onclick="closeCart()">×</button>
+
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="cart-footer">
+
+        <div class="cart-total-row">
+            <span>Total</span>
+            <strong id="cartTotal">R$ 0,00</strong>
+        </div>
+
+        <button class="primary-button" onclick="goToCheckout()">
+            FINALIZAR COMPRA
+        </button>
+
+    </div>
+
+</aside>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+<script src="produtos.js"></script>
+<script src="carrinho.js"></script>
+<script src="produto.js"></script>
+
+<script>
+function toggleMobileMenu() {
+    const nav = document.getElementById("mainNav");
+    if (nav) nav.classList.toggle("open");
+}
+
+function openSearch() {
+    const query = prompt("O que você procura?");
+    if (query) {
+        window.location.href = "index.html?search=" + encodeURIComponent(query);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof renderCart === "function") renderCart();
+});
+</script>
+
+</body>
+</html>
