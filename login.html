@@ -1,190 +1,129 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="description"
-    content="Entre na sua conta NOME."
-  >
+    <title>Entrar — GUIP</title>
 
-  <title>Entrar — NOME</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.svg">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="auth-page">
+<body>
 
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
-
-  <header class="header auth-header">
-
-    <a href="index.html" class="brand">
-      NOME<span>.</span>
+<header class="simple-header">
+    <a href="index.html">
+        <img src="logo.svg" alt="GUIP">
     </a>
-
-    <a href="index.html" class="auth-back">
-      ← Voltar para a loja
-    </a>
-
-  </header>
+</header>
 
 
-  <!-- =====================================================
-       LOGIN
-       ===================================================== -->
+<main class="auth-page">
 
-  <main class="auth-main">
+    <div class="auth-box">
 
-    <section class="auth-card">
+        <span class="eyebrow">GUIP ACCOUNT</span>
 
-      <div class="auth-heading">
+        <h1>Entrar</h1>
 
-        <span class="section-label">
-          SUA CONTA
-        </span>
-
-        <h1>
-          BEM-VINDO<br>
-          <em>DE VOLTA.</em>
-        </h1>
-
-        <p>
-          Entre para acompanhar seus pedidos e acessar sua conta.
+        <p class="auth-subtitle">
+            Entre na sua conta para acompanhar seus pedidos.
         </p>
 
-      </div>
 
+        <form id="loginForm">
 
-      <!-- =================================================
-           FORMULÁRIO
-           ================================================= -->
-
-      <form
-        class="auth-form"
-        onsubmit="loginUser(event)"
-      >
-
-        <div class="form-field">
-
-          <label for="loginEmail">
-            E-MAIL
-          </label>
-
-          <input
-            id="loginEmail"
-            name="email"
-            type="email"
-            autocomplete="email"
-            placeholder="seu@email.com"
-            required
-          >
-
-        </div>
-
-
-        <div class="form-field">
-
-          <div class="form-label-row">
-
-            <label for="loginPassword">
-              SENHA
+            <label>
+                E-mail
+                <input
+                    type="email"
+                    id="email"
+                    required
+                    autocomplete="email"
+                >
             </label>
 
-            <a href="#" onclick="return false;">
-              Esqueci minha senha
+
+            <label>
+                Senha
+                <input
+                    type="password"
+                    id="password"
+                    required
+                    autocomplete="current-password"
+                >
+            </label>
+
+
+            <button type="submit" class="primary-button">
+                ENTRAR
+            </button>
+
+        </form>
+
+
+        <p id="loginMessage" class="form-message"></p>
+
+
+        <div class="auth-links">
+
+            <span>Ainda não possui uma conta?</span>
+
+            <a href="cadastro.html">
+                Criar conta
             </a>
 
-          </div>
-
-          <input
-            id="loginPassword"
-            name="password"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Digite sua senha"
-            required
-          >
-
         </div>
-
-
-        <!-- Mensagem de erro/sucesso -->
-
-        <div
-          id="loginMessage"
-          class="auth-message"
-          style="display:none;"
-        ></div>
-
-
-        <button
-          type="submit"
-          class="button button-black auth-submit"
-        >
-          ENTRAR
-        </button>
-
-      </form>
-
-
-      <!-- =================================================
-           CADASTRO
-           ================================================= -->
-
-      <div class="auth-divider">
-        <span>AINDA NÃO TEM UMA CONTA?</span>
-      </div>
-
-      <a
-        href="cadastro.html"
-        class="button button-outline auth-register"
-      >
-        CRIAR CONTA
-      </a>
-
-    </section>
-
-  </main>
-
-
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
-
-  <footer class="auth-footer">
-
-    <div class="footer-bottom">
-
-      <span>
-        © 2026 NOME.
-      </span>
-
-      <span>
-        TODOS OS DIREITOS RESERVADOS.
-      </span>
 
     </div>
 
-  </footer>
+</main>
 
 
-  <!-- =====================================================
-       SCRIPTS
-       ===================================================== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
 
-  <script src="auth.js"></script>
+<script>
+
+document
+    .getElementById("loginForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const message = document.getElementById("loginMessage");
+        const button = this.querySelector("button");
+
+        button.disabled = true;
+        button.textContent = "ENTRANDO...";
+
+        message.textContent = "";
+
+        const result = await loginUser(email, password);
+
+        if (!result.success) {
+
+            message.textContent =
+                result.error || "Não foi possível entrar.";
+
+            button.disabled = false;
+            button.textContent = "ENTRAR";
+
+            return;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const next = params.get("next");
+
+        window.location.href =
+            next || "conta.html";
+    });
+
+</script>
 
 </body>
 </html>
