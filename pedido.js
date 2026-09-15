@@ -1,255 +1,169 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+let currentOrder = null;
 
-  <title>Pedido confirmado — NOME</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-  <header class="header">
-
-    <a href="index.html" class="brand">
-      NOME<span>.</span>
-    </a>
-
-    <div class="header-actions">
-      <a href="conta.html" class="account-link">
-        Conta
-      </a>
-
-      <a href="index.html#produtos" class="cart-button">
-        Loja
-      </a>
-    </div>
-
-  </header>
-
-
-  <main class="order-success-page">
-
-    <section class="order-success">
-
-      <span class="section-label">
-        PEDIDO RECEBIDO
-      </span>
-
-      <div class="success-icon">
-        ✓
-      </div>
-
-      <h1>
-        COMPRA<br>
-        <em>CONFIRMADA.</em>
-      </h1>
-
-      <p class="success-text">
-        Obrigado por comprar com a NOME.
-        Seu pedido foi registrado com sucesso.
-      </p>
-
-
-      <div class="order-card">
-
-        <div class="order-card-row">
-
-          <span>
-            PEDIDO
-          </span>
-
-          <strong id="orderNumber">
-            —
-          </strong>
-
-        </div>
-
-
-        <div class="order-card-row">
-
-          <span>
-            STATUS
-          </span>
-
-          <strong id="orderStatus">
-            Aguardando pagamento
-          </strong>
-
-        </div>
-
-
-        <div class="order-card-row">
-
-          <span>
-            PAGAMENTO
-          </span>
-
-          <strong id="orderPayment">
-            —
-          </strong>
-
-        </div>
-
-
-        <div class="order-card-row">
-
-          <span>
-            TOTAL
-          </span>
-
-          <strong id="orderTotal">
-            R$ 0,00
-          </strong>
-
-        </div>
-
-      </div>
-
-
-      <div class="success-actions">
-
-        <a
-          href="pedidos.html"
-          class="button button-black"
-        >
-          VER MEUS PEDIDOS
-        </a>
-
-        <a
-          href="index.html"
-          class="button button-outline"
-        >
-          VOLTAR PARA A LOJA
-        </a>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <footer>
-
-    <div class="footer-bottom">
-
-      <span>
-        © 2026 NOME.
-      </span>
-
-      <span>
-        TODOS OS DIREITOS RESERVADOS.
-      </span>
-
-    </div>
-
-  </footer>
-
-
-  <script>
-
-    function formatOrderPrice(value) {
-
-      return Number(value).toLocaleString("pt-BR", {
+function orderPrice(value) {
+    return Number(value || 0).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL"
-      });
+    });
+}
 
+function getOrderId() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("id");
+}
+
+function translateStatus(status) {
+
+    const statuses = {
+        pending: "Aguardando pagamento",
+        paid: "Pagamento aprovado",
+        processing: "Em preparação",
+        shipped: "Enviado",
+        delivered: "Entregue",
+        cancelled: "Cancelado",
+        canceled: "Cancelado"
+    };
+
+    return statuses[status] || status || "Em análise";
+}
+
+async function loadOrder() {
+
+    const orderId = getOrderId();
+
+    if (!orderId) {
+        window.location.href = "pedidos.html";
+        return;
     }
 
-
-    function loadOrder() {
-
-      const params =
-        new URLSearchParams(window.location.search);
-
-      const orderId =
-        params.get("id");
-
-
-      if (!orderId) {
+    if (typeof getCurrentUser !== "function") {
+        window.location.href = "login.html";
         return;
-      }
-
-
-      let orders = [];
-
-      try {
-
-        orders = JSON.parse(
-          localStorage.getItem(
-            "nome_streetwear_orders"
-          ) || "[]"
-        );
-
-      } catch (error) {
-
-        orders = [];
-
-      }
-
-
-      const order =
-        orders.find(
-          item => item.id === orderId
-        );
-
-
-      if (!order) {
-        return;
-      }
-
-
-      document.getElementById(
-        "orderNumber"
-      ).textContent = order.id;
-
-
-      document.getElementById(
-        "orderStatus"
-      ).textContent =
-        order.status || "Aguardando pagamento";
-
-
-      document.getElementById(
-        "orderTotal"
-      ).textContent =
-        formatOrderPrice(order.total);
-
-
-      const paymentNames = {
-        pix: "PIX",
-        card: "Cartão"
-      };
-
-
-      document.getElementById(
-        "orderPayment"
-      ).textContent =
-        paymentNames[order.payment] ||
-        order.payment ||
-        "—";
-
     }
 
+    const user = await getCurrentUser();
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      loadOrder
-    );
+    if (!user) {
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                `pedido.html?id=${orderId}`
+            )}`;
 
-  </script>
+        return;
+    }
 
-</body>
-</html>
+    const { data: order, error } = await db
+        .from("orders")
+        .select("*")
+        .eq("id", orderId)
+        .eq("user_id", user.id)
+        .single();
+
+    if (error || !order) {
+
+        document.getElementById("orderContainer").innerHTML = `
+            <div class="order-error">
+                <h2>Pedido não encontrado</h2>
+                <p>
+                    Não encontramos esse pedido na sua conta.
+                </p>
+                <a href="pedidos.html">Voltar aos pedidos</a>
+            </div>
+        `;
+
+        return;
+    }
+
+    currentOrder = order;
+
+    const { data: items, error: itemsError } = await db
+        .from("order_items")
+        .select("*")
+        .eq("order_id", order.id);
+
+    if (itemsError) {
+        console.error(itemsError);
+    }
+
+    renderOrder(order, items || []);
+}
+
+function renderOrder(order, items) {
+
+    document.title = `Pedido #${String(order.id).slice(0, 8)} | GUIP`;
+
+    document.getElementById("orderNumber").textContent =
+        `#${String(order.id).slice(0, 8).toUpperCase()}`;
+
+    document.getElementById("orderStatus").textContent =
+        translateStatus(order.status);
+
+    document.getElementById("orderTotal").textContent =
+        orderPrice(order.total);
+
+    if (order.created_at) {
+
+        const date = new Date(order.created_at);
+
+        document.getElementById("orderDate").textContent =
+            date.toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            });
+    }
+
+    const container = document.getElementById("orderItems");
+
+    container.innerHTML = items.map(item => {
+
+        const image =
+            item.image_url ||
+            "https://placehold.co/120x150/f5f5f5/111111?text=GUIP";
+
+        return `
+            <div class="order-item">
+
+                <img src="${image}" alt="${item.product_name || "Produto"}">
+
+                <div class="order-item-info">
+
+                    <strong>
+                        ${item.product_name || "Produto GUIP"}
+                    </strong>
+
+                    <span>
+                        Quantidade: ${item.quantity || 1}
+                    </span>
+
+                    ${
+                        item.size
+                            ? `<span>Tamanho: ${item.size}</span>`
+                            : ""
+                    }
+
+                </div>
+
+                <strong>
+                    ${orderPrice(
+                        Number(item.price) *
+                        Number(item.quantity || 1)
+                    )}
+                </strong>
+
+            </div>
+        `;
+
+    }).join("");
+
+    const shipping = document.getElementById("orderShipping");
+
+    if (shipping) {
+        shipping.textContent =
+            order.shipping_total
+                ? orderPrice(order.shipping_total)
+                : "A calcular";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadOrder);
