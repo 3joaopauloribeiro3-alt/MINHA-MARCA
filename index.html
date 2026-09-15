@@ -1,1165 +1,839 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
 
-    <title>GUIP — Streetwear</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <meta
-        name="description"
-        content="GUIP — streetwear para quem não segue padrão."
-    >
+  <meta
+    name="description"
+    content="GUIP — Streetwear para quem não segue padrão."
+  >
 
-    <meta name="theme-color" content="#ffffff">
+  <meta
+    name="theme-color"
+    content="#0b0b0b"
+  >
 
-    <link rel="icon" href="logo.svg">
-    <link rel="stylesheet" href="style.css">
+  <title>GUIP — Streetwear</title>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- =====================================================
-         TOP BAR
-    ====================================================== -->
+  <!-- =====================================================
+       BARRA SUPERIOR
+  ====================================================== -->
 
-    <div class="top-bar">
-        <p>DROP 01 — NOVA COLEÇÃO DISPONÍVEL</p>
+  <div class="announcement">
+    DROP 01 / 2026 — ENVIO PARA TODO O BRASIL
+  </div>
 
-        <a href="#drop">
-            VER DROP
-            <span>↗</span>
-        </a>
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="header">
+
+    <a href="index.html" class="logo" aria-label="GUIP">
+      GUIP
+    </a>
+
+    <nav aria-label="Navegação principal">
+
+      <a href="#drop">
+        DROP
+      </a>
+
+      <a href="#shop">
+        SHOP
+      </a>
+
+      <a href="#marca">
+        A MARCA
+      </a>
+
+    </nav>
+
+    <div class="header-actions">
+
+      <!-- Busca -->
+      <button
+        class="icon-btn"
+        type="button"
+        aria-label="Buscar"
+        onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})"
+      >
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M20 20L16.2 16.2"></path>
+        </svg>
+      </button>
+
+
+      <!-- Conta -->
+      <a
+        href="login.html"
+        class="icon-btn"
+        aria-label="Minha conta"
+      >
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4 21c.8-4.2 3.5-6.5 8-6.5s7.2 2.3 8 6.5"></path>
+        </svg>
+      </a>
+
+
+      <!-- Carrinho -->
+      <button
+        class="cart-btn"
+        type="button"
+        onclick="openCart()"
+        aria-label="Abrir carrinho"
+      >
+
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          aria-hidden="true"
+        >
+          <path d="M6 8h12l1 13H5L6 8Z"></path>
+          <path d="M9 8a3 3 0 0 1 6 0"></path>
+        </svg>
+
+        <span id="cartCount">0</span>
+
+      </button>
+
     </div>
 
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
-    <header class="header" id="siteHeader">
-
-        <button
-            class="mobile-menu-button"
-            type="button"
-            onclick="toggleMobileMenu()"
-            aria-label="Abrir menu"
-        >
-            <span></span>
-            <span></span>
-        </button>
+  </header>
 
 
-        <a href="index.html" class="logo-link">
-            <img
-                src="logo.svg"
-                alt="GUIP"
-                class="logo"
-            >
-        </a>
-
-
-        <nav class="main-navigation">
-
-            <a href="#drop">
-                DROP 01
-            </a>
-
-            <a href="#shop">
-                SHOP
-            </a>
-
-            <a href="sobre.html">
-                A MARCA
-            </a>
-
-        </nav>
-
-
-        <div class="header-actions">
-
-            <!-- Busca -->
-
-            <button
-                type="button"
-                class="header-action"
-                onclick="openSearch()"
-                aria-label="Buscar"
-            >
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <circle
-                        cx="11"
-                        cy="11"
-                        r="6.5"
-                    ></circle>
-
-                    <path d="M16 16L21 21"></path>
-                </svg>
-            </button>
-
-
-            <!-- Conta -->
-
-            <a
-                href="conta.html"
-                class="header-action"
-                aria-label="Minha conta"
-            >
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <circle
-                        cx="12"
-                        cy="8"
-                        r="3.2"
-                    ></circle>
-
-                    <path
-                        d="M5 20C5.8 16.2 8.1 14.3 12 14.3C15.9 14.3 18.2 16.2 19 20"
-                    ></path>
-                </svg>
-            </a>
-
-
-            <!-- Carrinho -->
-
-            <button
-                type="button"
-                class="header-action cart-button"
-                onclick="openCart()"
-                aria-label="Carrinho"
-            >
-                <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                >
-                    <path d="M4 5H7L8.5 15.2C8.7 16.3 9.6 17 10.7 17H18"></path>
-
-                    <path d="M8 8H20L18.7 14H9"></path>
-
-                    <circle
-                        cx="10.5"
-                        cy="20"
-                        r="1"
-                    ></circle>
-
-                    <circle
-                        cx="17"
-                        cy="20"
-                        r="1"
-                    ></circle>
-                </svg>
-
-                <span id="cartCount">0</span>
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- =====================================================
-         MOBILE MENU
-    ====================================================== -->
-
-    <div
-        class="mobile-menu"
-        id="mobileMenu"
-    >
-
-        <a
-            href="#drop"
-            onclick="toggleMobileMenu()"
-        >
-            DROP 01
-        </a>
-
-        <a
-            href="#shop"
-            onclick="toggleMobileMenu()"
-        >
-            SHOP
-        </a>
-
-        <a href="sobre.html">
-            A MARCA
-        </a>
-
-        <a href="conta.html">
-            MINHA CONTA
-        </a>
-
-        <a href="pedidos.html">
-            MEUS PEDIDOS
-        </a>
-
-    </div>
+  <main>
 
 
     <!-- =====================================================
          HERO
     ====================================================== -->
 
-    <main>
-
-        <section class="hero">
-
-            <div class="hero-content">
-
-                <div class="hero-label">
-                    <span></span>
-                    GUIP / STREETWEAR
-                </div>
-
-
-                <h1>
-                    NÃO É SÓ
-                    <br>
-
-                    <span>ROUPA.</span>
-                </h1>
-
-
-                <p>
-                    Identidade para quem cria o próprio caminho.
-                    Vista aquilo que representa você.
-                </p>
-
-
-                <a
-                    href="#drop"
-                    class="primary-button"
-                >
-                    VER DROP 01
-
-                    <span>↗</span>
-                </a>
-
-            </div>
-
-
-            <div class="hero-art">
-
-                <div class="hero-art-background"></div>
-
-                <div class="hero-logo-letter">
-                    G
-                </div>
-
-
-                <div class="hero-information">
-
-                    <span>
-                        DROP 01
-                    </span>
-
-                    <span>
-                        GUIP®
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="hero-scroll">
-
-                <span>
-                    01 / 03
-                </span>
-
-                <span>
-                    SCROLL ↓
-                </span>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             MARQUEE
-        ================================================== -->
-
-        <section class="marquee">
-
-            <div class="marquee-content">
-
-                GUIP® — FEITO PRA QUEM NÃO SEGUE PADRÃO.
-                &nbsp;&nbsp;&nbsp;
-
-                GUIP® — FEITO PRA QUEM NÃO SEGUE PADRÃO.
-                &nbsp;&nbsp;&nbsp;
-
-                GUIP® — FEITO PRA QUEM NÃO SEGUE PADRÃO.
-                &nbsp;&nbsp;&nbsp;
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             DROP
-        ================================================== -->
-
-        <section
-            class="products-section"
-            id="drop"
-        >
-
-            <div class="section-header">
-
-                <div>
-
-                    <span class="section-label">
-                        COLEÇÃO / 001
-                    </span>
-
-                    <h2>
-                        DROP 01
-                    </h2>
-
-                </div>
-
-
-                <p>
-                    Peças essenciais.
-                    <br>
-                    O DNA da GUIP em cada detalhe.
-                </p>
-
-            </div>
-
-
-            <!-- FILTROS -->
-
-            <div
-                class="products-toolbar"
-                id="shop"
-            >
-
-                <div class="filters">
-
-                    <button
-                        class="filter active"
-                        data-category="todos"
-                    >
-                        TODOS
-                    </button>
-
-                    <button
-                        class="filter"
-                        data-category="camisetas"
-                    >
-                        CAMISETAS
-                    </button>
-
-                    <button
-                        class="filter"
-                        data-category="moletons"
-                    >
-                        MOLETONS
-                    </button>
-
-                    <button
-                        class="filter"
-                        data-category="calcas"
-                    >
-                        CALÇAS
-                    </button>
-
-                    <button
-                        class="filter"
-                        data-category="acessorios"
-                    >
-                        ACESSÓRIOS
-                    </button>
-
-                </div>
-
-
-                <span
-                    class="product-count"
-                    id="productCount"
-                ></span>
-
-            </div>
-
-
-            <!-- PRODUTOS -->
-
-            <div
-                class="product-grid"
-                id="productGrid"
-            ></div>
-
-        </section>
-
-
-        <!-- =================================================
-             CATEGORIAS
-        ================================================== -->
-
-        <section class="categories">
-
-            <a
-                href="#shop"
-                data-category-link="camisetas"
-            >
-
-                <span>
-                    01
-                </span>
-
-                <strong>
-                    CAMISETAS
-                </strong>
-
-                <b>
-                    ↗
-                </b>
-
-            </a>
-
-
-            <a
-                href="#shop"
-                data-category-link="moletons"
-            >
-
-                <span>
-                    02
-                </span>
-
-                <strong>
-                    MOLETONS
-                </strong>
-
-                <b>
-                    ↗
-                </b>
-
-            </a>
-
-
-            <a
-                href="#shop"
-                data-category-link="calcas"
-            >
-
-                <span>
-                    03
-                </span>
-
-                <strong>
-                    CALÇAS
-                </strong>
-
-                <b>
-                    ↗
-                </b>
-
-            </a>
-
-
-            <a
-                href="#shop"
-                data-category-link="acessorios"
-            >
-
-                <span>
-                    04
-                </span>
-
-                <strong>
-                    ACESSÓRIOS
-                </strong>
-
-                <b>
-                    ↗
-                </b>
-
-            </a>
-
-        </section>
-
-
-        <!-- =================================================
-             MANIFESTO
-        ================================================== -->
-
-        <section class="manifesto">
-
-            <div class="manifesto-top">
-
-                <span>
-                    GUIP / A MARCA
-                </span>
-
-                <span>
-                    EST. 2026
-                </span>
-
-            </div>
-
-
-            <div class="manifesto-content">
-
-                <h2>
-                    FEITO PRA QUEM
-                    <br>
-
-                    <span>
-                        NÃO SEGUE PADRÃO.
-                    </span>
-                </h2>
-
-
-                <p>
-                    Não é sobre vestir o que todo mundo veste.
-                    <br>
-                    É sobre encontrar o seu jeito.
-                </p>
-
-
-                <a href="sobre.html">
-                    CONHEÇA A GUIP
-                    <span>↗</span>
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             ESSENCIAIS
-        ================================================== -->
-
-        <section class="featured-section">
-
-            <div class="section-header">
-
-                <div>
-
-                    <span class="section-label">
-                        SELEÇÃO GUIP
-                    </span>
-
-                    <h2>
-                        ESSENCIAIS
-                    </h2>
-
-                </div>
-
-
-                <a
-                    href="#drop"
-                    class="text-link"
-                >
-                    VER TODOS ↗
-                </a>
-
-            </div>
-
-
-            <div
-                class="product-grid"
-                id="featuredGrid"
-            ></div>
-
-        </section>
-
-
-        <!-- =================================================
-             BENEFÍCIOS
-        ================================================== -->
-
-        <section class="benefits">
-
-            <div>
-
-                <span>
-                    01
-                </span>
-
-                <strong>
-                    ENVIO PARA TODO O BRASIL
-                </strong>
-
-                <p>
-                    Receba seu pedido onde estiver.
-                </p>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    02
-                </span>
-
-                <strong>
-                    COMPRA SEGURA
-                </strong>
-
-                <p>
-                    Pagamento protegido e checkout seguro.
-                </p>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    03
-                </span>
-
-                <strong>
-                    FEITO PARA DURAR
-                </strong>
-
-                <p>
-                    Peças pensadas em cada detalhe.
-                </p>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    04
-                </span>
-
-                <strong>
-                    GUIP SUPPORT
-                </strong>
-
-                <p>
-                    Nossa equipe está pronta para ajudar.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             NEWSLETTER
-        ================================================== -->
-
-        <section class="newsletter">
-
-            <div>
-
-                <span class="section-label">
-                    GUIP COMMUNITY
-                </span>
-
-                <h2>
-                    ENTRE PARA O
-                    <br>
-
-                    <em>
-                        PRÓXIMO DROP.
-                    </em>
-                </h2>
-
-            </div>
-
-
-            <form id="newsletterForm">
-
-                <input
-                    type="email"
-                    id="newsletterEmail"
-                    placeholder="Seu melhor e-mail"
-                    autocomplete="email"
-                    required
-                >
-
-                <button type="submit">
-                    INSCREVER
-                    <span>↗</span>
-                </button>
-
-            </form>
-
-        </section>
-
-    </main>
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <footer>
-
-        <div class="footer-content">
-
-            <div class="footer-brand">
-
-                <img
-                    src="logo.svg"
-                    alt="GUIP"
-                >
-
-                <p>
-                    Streetwear para quem cria
-                    <br>
-                    o próprio caminho.
-                </p>
-
-            </div>
-
-
-            <div class="footer-column">
-
-                <span>
-                    SHOP
-                </span>
-
-                <a href="#drop">
-                    Drop 01
-                </a>
-
-                <a href="#shop">
-                    Produtos
-                </a>
-
-                <a href="pedidos.html">
-                    Pedidos
-                </a>
-
-            </div>
-
-
-            <div class="footer-column">
-
-                <span>
-                    GUIP
-                </span>
-
-                <a href="sobre.html">
-                    A marca
-                </a>
-
-                <a href="conta.html">
-                    Minha conta
-                </a>
-
-                <a href="envio.html">
-                    Envios
-                </a>
-
-            </div>
-
-
-            <div class="footer-column">
-
-                <span>
-                    LEGAL
-                </span>
-
-                <a href="termos.html">
-                    Termos
-                </a>
-
-                <a href="privacidade.html">
-                    Privacidade
-                </a>
-
-                <a href="trocas.html">
-                    Trocas
-                </a>
-
-            </div>
+    <section class="hero" id="drop">
+
+      <div class="hero-content">
+
+        <div class="eyebrow">
+          STREETWEAR
+        </div>
+
+        <h1>
+          GUIP<br>
+          NÃO É SÓ<br>
+          <em>ROUPA.</em>
+        </h1>
+
+        <p class="hero-text">
+          É identidade. É presença. É o jeito que você
+          escolhe ocupar o mundo.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            href="#shop"
+            class="btn btn-light"
+          >
+            VER DROP
+            <span aria-hidden="true">→</span>
+          </a>
+
+          <a
+            href="#marca"
+            class="text-link"
+          >
+            CONHEÇA A GUIP →
+          </a>
 
         </div>
 
 
-        <div class="footer-bottom">
+        <!-- Paginação visual -->
 
-            <span>
-                © 2026 GUIP®
-            </span>
+        <div class="hero-pagination">
 
-            <span>
-                FEITO NO BRASIL.
-            </span>
+          <span class="active">
+            01
+          </span>
+
+          <span>
+            02
+          </span>
+
+          <span>
+            03
+          </span>
+
+          <i></i>
 
         </div>
 
-    </footer>
+      </div>
+
+
+      <!-- Imagem/arte do hero -->
+
+      <div class="hero-art">
+
+        <div class="hero-card">
+
+          <div class="hero-overlay"></div>
+
+          <div class="model-shape"></div>
+
+          <div class="hero-label">
+            DROP 01 / 2026
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
 
 
     <!-- =====================================================
-         BUSCA
+         TICKER
     ====================================================== -->
 
-    <div
-        class="search-overlay"
-        id="searchOverlay"
+    <div class="ticker">
+
+      <span>
+        GUIP
+      </span>
+
+      <span>
+        DROP 01
+      </span>
+
+      <span>
+        STREETWEAR
+      </span>
+
+      <span>
+        FEITO PRA QUEM NÃO SEGUE PADRÃO
+      </span>
+
+      <span>
+        GUIP
+      </span>
+
+    </div>
+
+
+    <!-- =====================================================
+         SHOP / DROP 01
+    ====================================================== -->
+
+    <section
+      class="section"
+      id="shop"
     >
+
+      <div class="section-head">
+
+        <div>
+
+          <div class="eyebrow">
+            COLEÇÃO
+          </div>
+
+          <h2>
+            DROP 01
+          </h2>
+
+        </div>
+
+        <div class="section-note">
+
+          <p>
+            Peças essenciais, silhuetas marcantes
+            e o DNA GUIP em cada detalhe.
+          </p>
+
+          <a
+            href="#shop"
+            class="btn btn-light"
+            style="margin-top:22px;"
+          >
+            VER TODOS
+            <span aria-hidden="true">→</span>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- Filtros -->
+
+      <div class="filters">
 
         <button
-            class="search-close"
-            type="button"
-            onclick="closeSearch()"
+          class="filter active"
+          data-filter="all"
+          type="button"
         >
-            ×
+          Todos
         </button>
 
+        <button
+          class="filter"
+          data-filter="camisetas"
+          type="button"
+        >
+          Camisetas
+        </button>
 
-        <div class="search-container">
+        <button
+          class="filter"
+          data-filter="moletons"
+          type="button"
+        >
+          Moletons
+        </button>
 
-            <span>
-                BUSCAR
-            </span>
+        <button
+          class="filter"
+          data-filter="calcas"
+          type="button"
+        >
+          Calças
+        </button>
 
-            <input
-                type="search"
-                id="searchInput"
-                placeholder="O que você procura?"
-                autocomplete="off"
-            >
+        <button
+          class="filter"
+          data-filter="acessorios"
+          type="button"
+        >
+          Acessórios
+        </button>
 
-        </div>
+      </div>
 
-    </div>
+
+      <!-- Produtos gerados pelo script.js -->
+
+      <div
+        class="products"
+        id="products"
+      >
+        <!-- Produtos inseridos automaticamente pelo script.js -->
+      </div>
+
+    </section>
 
 
     <!-- =====================================================
-         MODAL PRODUTO
+         A MARCA
     ====================================================== -->
 
-    <div
-        class="product-modal"
-        id="productModal"
+    <section
+      class="feature"
+      id="marca"
     >
 
-        <div
-            class="modal-background"
-            onclick="closeProduct()"
-        ></div>
+      <div class="feature-image">
 
-
-        <div class="product-modal-card">
-
-            <button
-                class="modal-close"
-                type="button"
-                onclick="closeProduct()"
-            >
-                ×
-            </button>
-
-
-            <div class="modal-product-image">
-
-                <img
-                    id="modalImage"
-                    src=""
-                    alt=""
-                >
-
-            </div>
-
-
-            <div class="modal-product-info">
-
-                <span
-                    id="modalTag"
-                    class="modal-tag"
-                ></span>
-
-
-                <small id="modalCategory"></small>
-
-
-                <h2 id="modalName"></h2>
-
-
-                <strong id="modalPrice"></strong>
-
-
-                <p id="modalDescription"></p>
-
-
-                <div class="size-title">
-
-                    TAMANHO
-
-                    <span id="sizeError"></span>
-
-                </div>
-
-
-                <div
-                    id="sizeOptions"
-                    class="size-options"
-                ></div>
-
-
-                <button
-                    class="add-to-cart-button"
-                    type="button"
-                    onclick="addCurrentProduct()"
-                >
-                    ADICIONAR AO CARRINHO
-
-                    <span>↗</span>
-                </button>
-
-            </div>
-
+        <div class="feature-mark">
+          G
         </div>
+
+      </div>
+
+
+      <div class="feature-copy">
+
+        <div class="eyebrow">
+          A MARCA
+        </div>
+
+        <h2>
+          FEITO PRA QUEM
+          <em>NÃO SEGUE PADRÃO.</em>
+        </h2>
+
+        <p>
+          A GUIP nasceu para transformar roupa em
+          identidade. Cada peça carrega uma visão
+          simples: vestir aquilo que representa quem
+          você é, sem precisar seguir regras.
+        </p>
+
+        <a
+          href="sobre.html"
+          class="btn btn-dark"
+        >
+          CONHEÇA A GUIP
+          <span aria-hidden="true">→</span>
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MANIFESTO
+    ====================================================== -->
+
+    <section class="manifesto">
+
+      <div class="eyebrow">
+        NOSSO MANIFESTO
+      </div>
+
+      <h2>
+        NÃO VISTA<br>
+        <em>O PADRÃO.</em>
+      </h2>
+
+    </section>
+
+
+    <!-- =====================================================
+         BENEFÍCIOS
+    ====================================================== -->
+
+    <section class="benefits">
+
+      <div>
+
+        <span class="benefit-icon">
+          ↗
+        </span>
+
+        <strong>
+          ENVIO PARA TODO BRASIL
+        </strong>
+
+        <small>
+          Rápido e seguro
+        </small>
+
+      </div>
+
+
+      <div>
+
+        <span class="benefit-icon">
+          ◇
+        </span>
+
+        <strong>
+          PAGAMENTO SEGURO
+        </strong>
+
+        <small>
+          Seus dados protegidos
+        </small>
+
+      </div>
+
+
+      <div>
+
+        <span class="benefit-icon">
+          ↻
+        </span>
+
+        <strong>
+          TROCA FÁCIL
+        </strong>
+
+        <small>
+          Sem complicação
+        </small>
+
+      </div>
+
+
+      <div>
+
+        <span class="benefit-icon">
+          ○
+        </span>
+
+        <strong>
+          SUPORTE GUIP
+        </strong>
+
+        <small>
+          Estamos aqui por você
+        </small>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         NEWSLETTER
+    ====================================================== -->
+
+    <section class="newsletter">
+
+      <div>
+
+        <div class="eyebrow">
+          FIQUE POR DENTRO
+        </div>
+
+        <h2>
+          ENTRE PARA<br>
+          A GUIP.
+        </h2>
+
+        <p>
+          Receba novidades, lançamentos e acesso
+          antecipado aos próximos drops.
+        </p>
+
+      </div>
+
+
+      <form
+        id="newsletterForm"
+        onsubmit="subscribeNewsletter(event)"
+      >
+
+        <input
+          type="email"
+          id="newsletterEmail"
+          placeholder="Seu melhor e-mail"
+          autocomplete="email"
+          required
+        >
+
+        <button
+          type="submit"
+          class="btn btn-light"
+        >
+          ENTRAR
+        </button>
+
+      </form>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer>
+
+    <div>
+
+      <a
+        href="index.html"
+        class="footer-logo"
+      >
+        GUIP
+      </a>
+
+      <p>
+        Streetwear para quem não segue padrão.
+      </p>
 
     </div>
 
 
-    <!-- =====================================================
-         CARRINHO
-    ====================================================== -->
+    <div class="footer-links">
 
-    <div
-        class="cart-overlay"
-        id="cartOverlay"
+      <a href="sobre.html">
+        A MARCA
+      </a>
+
+      <a href="termos.html">
+        TERMOS
+      </a>
+
+      <a href="privacidade.html">
+        PRIVACIDADE
+      </a>
+
+      <a href="trocas.html">
+        TROCAS
+      </a>
+
+      <a href="envio.html">
+        ENVIO
+      </a>
+
+    </div>
+
+
+    <p>
+      © 2026 GUIP. TODOS OS DIREITOS RESERVADOS.
+    </p>
+
+  </footer>
+
+
+
+  <!-- =====================================================
+       MODAL DO PRODUTO
+  ====================================================== -->
+
+  <div
+    class="modal"
+    id="productModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-box">
+
+      <button
+        class="close"
+        type="button"
+        onclick="closeProduct()"
+        aria-label="Fechar"
+      >
+        ×
+      </button>
+
+
+      <div class="modal-product">
+
+
+        <!-- Visual -->
+
+        <div class="product-visual">
+
+          <span class="product-tag">
+            DROP 01
+          </span>
+
+        </div>
+
+
+        <!-- Informações -->
+
+        <div>
+
+          <div
+            class="eyebrow"
+            id="modalCategory"
+          >
+            PRODUTO — DROP 01
+          </div>
+
+          <h2 id="modalName">
+            Produto
+          </h2>
+
+          <div
+            class="price"
+            id="modalPrice"
+          >
+            R$ 0,00
+          </div>
+
+          <p
+            class="modal-desc"
+            id="modalDesc"
+          >
+            Descrição do produto.
+          </p>
+
+
+          <label>
+            TAMANHO
+          </label>
+
+          <div
+            class="sizes"
+            id="modalSizes"
+          >
+          </div>
+
+
+          <button
+            class="btn btn-dark full"
+            type="button"
+            onclick="addCurrent()"
+          >
+            ADICIONAR À SACOLA
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       OVERLAY DO CARRINHO
+  ====================================================== -->
+
+  <div
+    class="overlay"
+    id="overlay"
+    onclick="closeCart()"
+  ></div>
+
+
+
+  <!-- =====================================================
+       CARRINHO
+  ====================================================== -->
+
+  <aside
+    class="cart-drawer"
+    id="cartDrawer"
+    aria-label="Sua sacola"
+  >
+
+    <div class="cart-head">
+
+      <h2>
+        SUA SACOLA
+      </h2>
+
+      <button
+        class="close"
+        type="button"
         onclick="closeCart()"
-    ></div>
+        aria-label="Fechar carrinho"
+      >
+        ×
+      </button>
+
+    </div>
 
 
-    <aside
-        class="cart-drawer"
-        id="cartDrawer"
-    >
-
-        <div class="cart-header">
-
-            <div>
-
-                <span>
-                    GUIP®
-                </span>
-
-                <h2>
-                    SEU CARRINHO
-                </h2>
-
-            </div>
-
-
-            <button
-                type="button"
-                onclick="closeCart()"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <div
-            class="cart-items"
-            id="cartItems"
-        ></div>
-
-
-        <div class="cart-footer">
-
-            <div class="cart-total">
-
-                <span>
-                    TOTAL
-                </span>
-
-                <strong id="cartTotal">
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-
-            <button
-                type="button"
-                onclick="goToCheckout()"
-            >
-                IR PARA O CHECKOUT
-
-                <span>↗</span>
-            </button>
-
-        </div>
-
-    </aside>
-
-
-    <!-- =====================================================
-         TOAST
-    ====================================================== -->
+    <!-- Produtos do carrinho -->
 
     <div
-        class="toast"
-        id="toast"
-    ></div>
+      class="cart-items"
+      id="cartItems"
+    >
+
+      <div class="empty">
+        Sua sacola está vazia.
+      </div>
+
+    </div>
 
 
-    <!-- =====================================================
-         SCRIPTS
-    ====================================================== -->
+    <!-- Total -->
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <div class="cart-bottom">
 
-    <script src="supabase.js"></script>
+      <div class="cart-total">
 
-    <script src="produtos.js"></script>
+        <span>
+          TOTAL
+        </span>
 
-    <script src="carrinho.js"></script>
+        <strong id="cartTotal">
+          R$ 0,00
+        </strong>
 
-    <script src="app.js"></script>
-
-
-    <script>
-
-        function toggleMobileMenu() {
-
-            const menu = document.getElementById("mobileMenu");
-
-            if (!menu) return;
-
-            menu.classList.toggle("open");
-
-        }
+      </div>
 
 
-        function openSearch() {
+      <button
+        class="btn btn-dark full"
+        type="button"
+        onclick="checkout()"
+      >
+        IR PARA O CHECKOUT
+        <span aria-hidden="true">→</span>
+      </button>
 
-            const overlay =
-                document.getElementById("searchOverlay");
+    </div>
 
-            if (!overlay) return;
-
-            overlay.classList.add("open");
-
-            setTimeout(() => {
-
-                const input =
-                    document.getElementById("searchInput");
-
-                if (input) input.focus();
-
-            }, 100);
-
-        }
+  </aside>
 
 
-        function closeSearch() {
 
-            const overlay =
-                document.getElementById("searchOverlay");
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
 
-            if (!overlay) return;
+  <script>
 
-            overlay.classList.remove("open");
+    /*
+     * Newsletter
+     * Mantém o formulário funcionando sem depender
+     * de serviço externo neste momento.
+     */
 
-        }
+    function subscribeNewsletter(event) {
 
+      event.preventDefault();
 
-        document.addEventListener(
-            "keydown",
-            function(event) {
+      const input =
+        document.getElementById("newsletterEmail");
 
-                if (event.key === "Escape") {
+      if (!input || !input.value) {
+        return;
+      }
 
-                    closeSearch();
+      alert(
+        "E-mail cadastrado com sucesso na GUIP."
+      );
 
-                    if (
-                        typeof closeProduct === "function"
-                    ) {
-                        closeProduct();
-                    }
+      input.value = "";
 
-                    if (
-                        typeof closeCart === "function"
-                    ) {
-                        closeCart();
-                    }
+    }
 
-                }
-
-            }
-        );
+  </script>
 
 
-        document
-            .querySelectorAll("[data-category-link]")
-            .forEach(function(link) {
-
-                link.addEventListener(
-                    "click",
-                    function() {
-
-                        const category =
-                            this.dataset.categoryLink;
-
-                        setTimeout(function() {
-
-                            const filter =
-                                document.querySelector(
-                                    '.filter[data-category="' +
-                                    category +
-                                    '"]'
-                                );
-
-                            if (filter) {
-
-                                filter.click();
-
-                            }
-
-                        }, 100);
-
-                    }
-                );
-
-            });
-
-
-        window.addEventListener(
-            "scroll",
-            function() {
-
-                const header =
-                    document.getElementById("siteHeader");
-
-                if (!header) return;
-
-                if (window.scrollY > 20) {
-
-                    header.classList.add("scrolled");
-
-                } else {
-
-                    header.classList.remove("scrolled");
-
-                }
-
-            },
-            {
-                passive: true
-            }
-        );
-
-    </script>
+  <!-- Script principal da loja -->
+  <script src="script.js"></script>
 
 </body>
 </html>
