@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pedido | GUIP</title>
+    <meta
+        name="description"
+        content="Acompanhe os detalhes do seu pedido GUIP."
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .order-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 70px 24px 120px;
+        }
+
+        .order-header {
+            margin-bottom: 55px;
+        }
+
+        .order-kicker {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .order-title {
+            margin: 0;
+            font-size: clamp(44px, 8vw, 82px);
+            line-height: .9;
+            letter-spacing: -.06em;
+        }
+
+        .order-number {
+            margin-top: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .order-status-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            padding: 25px 0;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 50px;
+        }
+
+        .status-label {
+            color: #777;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .status-value {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .order-date {
+            text-align: right;
+        }
+
+        .order-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 60px;
+        }
+
+        .order-section {
+            margin-bottom: 50px;
+        }
+
+        .order-section-title {
+            font-size: 22px;
+            margin: 0 0 22px;
+            letter-spacing: -.03em;
+        }
+
+        .order-items {
+            border-top: 1px solid #ddd;
+        }
+
+        .order-item {
+            display: grid;
+            grid-template-columns: 90px 1fr auto;
+            gap: 20px;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-item img {
+            width: 90px;
+            height: 110px;
+            object-fit: cover;
+            background: #f4f4f4;
+        }
+
+        .order-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .order-item-info strong {
+            font-size: 15px;
+        }
+
+        .order-item-info span {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .order-item-price {
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .order-summary {
+            background: #f5f5f5;
+            padding: 30px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 14px 0;
+            border-bottom: 1px solid #ddd;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .summary-row strong {
+            color: #111;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding-top: 22px;
+            margin-top: 8px;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .order-actions {
+            margin-top: 25px;
+        }
+
+        .order-button {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 16px 20px;
+            background: #111;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid #111;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .order-button.secondary {
+            margin-top: 10px;
+            background: transparent;
+            color: #111;
+        }
+
+        .order-loading {
+            padding: 70px 20px;
+            text-align: center;
+            color: #666;
+        }
+
+        .order-error {
+            padding: 70px 30px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        .order-error h2 {
+            margin: 0 0 12px;
+            font-size: 28px;
+        }
+
+        .order-error p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .order-error a {
+            display: inline-block;
+            padding: 15px 24px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .payment-box {
+            border: 1px solid #ddd;
+            padding: 22px;
+        }
+
+        .payment-box strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .payment-box span {
+            color: #777;
+            font-size: 14px;
+        }
+
+        @media (max-width: 850px) {
+            .order-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .order-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .order-page {
+                padding: 45px 20px 80px;
+            }
+
+            .order-status-box {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .order-date {
+                text-align: left;
+            }
+
+            .order-item {
+                grid-template-columns: 70px 1fr;
+                gap: 15px;
+            }
+
+            .order-item img {
+                width: 70px;
+                height: 90px;
+            }
+
+            .order-item-price {
+                grid-column: 2;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <a href="index.html" class="brand-logo">
+            <img src="logo.svg" alt="GUIP">
+        </a>
+
+        <nav class="main-nav">
+            <a href="index.html#drop">DROP</a>
+            <a href="index.html#shop">SHOP</a>
+            <a href="sobre.html">A MARCA</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="conta.html">Conta</a>
+            <a href="pedidos.html">Pedidos</a>
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="order-page">
+
+    <div id="orderContainer">
+
+        <div class="order-loading">
+            Carregando pedido...
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="site-footer">
+
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+
+            <img src="logo.svg" alt="GUIP">
+
+            <p>
+                Streetwear para quem não segue padrão.
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <div>
+
+                <strong>GUIP</strong>
+
+                <a href="sobre.html">
+                    A Marca
+                </a>
+
+                <a href="index.html#shop">
+                    Shop
+                </a>
+
+            </div>
+
+            <div>
+
+                <strong>SUPORTE</strong>
+
+                <a href="envio.html">
+                    Envio
+                </a>
+
+                <a href="trocas.html">
+                    Trocas
+                </a>
+
+                <a href="conta.html">
+                    Minha conta
+                </a>
+
+            </div>
+
+            <div>
+
+                <strong>LEGAL</strong>
+
+                <a href="termos.html">
+                    Termos
+                </a>
+
+                <a href="privacidade.html">
+                    Privacidade
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<script src="auth.js"></script>
+
+<script src="pedido.js"></script>
+
+</body>
+</html>
